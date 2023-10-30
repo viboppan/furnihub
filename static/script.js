@@ -1,21 +1,3 @@
-function myFunction(data){
-    console.log(JSON.stringify(data));
-
-
-}
-
-
-var jsonData = { "name": "name1" };
-
-
-$(document).ready(function () {
-
-    $("#add-cart").on("click", function () {
-        var product1 = $("#add-cart").data("product-id")
-        console.log("from jquery : "+product1)
-    });
-});
-
 
 document.addEventListener('DOMContentLoaded', function() {
     const addToCartButtons = document.querySelectorAll('.add-to-cart');
@@ -27,14 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     addToCartButtons.forEach(button => {
         button.addEventListener('click', function(e) {
-            // console.log("target from log : "+e.target.dataset);
-            var product = button.getAttribute('data-product-id');
-            //product.split("'").join('"');
-            product.replace(/'/g, '"');
 
-            // console.log("after replacing -----"+product1)
-            // var product = JSON.parse(product1)
-            // const product = products.find(p => p.id === productId);
+            var product = button.getAttribute('data-product-id');
+            product = JSON.parse(product.replace(/'/g, '"'));
             console.log("from add to cart"+product);
             console.log(typeof product); // To check the type of the variable
             console.log(Object.keys(product));

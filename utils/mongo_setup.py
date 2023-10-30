@@ -38,6 +38,7 @@ def insert_sample_data():
             rating=4.5
         )
         product.save()
+    update_product_images()
 
 # Generate random image URLs
 def generate_random_image_url():
