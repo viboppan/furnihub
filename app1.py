@@ -11,6 +11,10 @@ app1.register_blueprint(customer_endpoints)
 def hello_world():  # put application's code here
     return render_template("creativelogin.html")
 
+@app1.route('/customer/cart_page')
+def cart_page():  # put application's code here
+    return render_template("cart_page.html")
+
 
 if __name__ == '__main__':
     print("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")

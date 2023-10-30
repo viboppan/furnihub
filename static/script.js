@@ -38,5 +38,54 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         cartTotal.textContent = total.toFixed(2);
+
+    }
+
+    document.getElementById('go-to-cart-button').addEventListener('click', function() {
+            // Redirect to the cart_page.html
+            window.location.href = "cart_page";
+        });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Retrieve cart data from local storage (assuming you're using local storage)
+    const cartData = JSON.parse(localStorage.getItem('cart'));
+
+    const cartItems = document.getElementById('cart-items');
+
+    if (cartData && cartData.length > 0) {
+        cartData.forEach(item => {
+            const cartItemDiv = document.createElement('div');
+            cartItemDiv.classList.add('d-flex', 'flex-row', 'justify-content-between', 'align-items-center', 'pt-4', 'pb-3', 'mobile');
+
+            // Create elements for product details
+            const productImage = document.createElement('img');
+            productImage.src = item.image_url;
+            productImage.width = 150;
+            productImage.height = 150;
+            productImage.alt = 'Product Image';
+
+            const productDetailsDiv = document.createElement('div');
+            const productName = document.createElement('h6');
+            productName.innerText = item.name;
+
+            // Add other product details as needed (Art.No, Color, Size)
+
+            const productPrice = document.createElement('b');
+            productPrice.innerText = `$${item.cost.toFixed(2)}`;
+
+            // Create an element for the quantity controls (e.g., plus/minus buttons)
+
+            // Add a close button for removing items
+
+            // Append all elements to cartItemDiv
+
+            cartItemDiv.appendChild(productImage);
+            cartItemDiv.appendChild(productDetailsDiv);
+            cartItemDiv.appendChild(productPrice);
+            // Append other elements to cartItemDiv
+
+            cartItems.appendChild(cartItemDiv);
+        });
     }
 });

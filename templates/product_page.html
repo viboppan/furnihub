@@ -17,6 +17,8 @@
             <!-- Cart items will be displayed here -->
         </ul>
         <p>Total: $<span id="cart-total">0.00</span></p>
+{#        <button class="go-to-cart-button"  id="go-to-cart-button"  >Go to Cart</button>#}
+       <a href="{{ url_for('cart_page') }}" class="go-to-cart-button">Go to Cart</a> <!-- Add this line -->
     </div>
 
     <h1>Product Page</h1>

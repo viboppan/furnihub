@@ -912,3 +912,15 @@ h1 {
 height: 100vh !important;
 }
 }
+
+.go-to-cart-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* Text color */
+    padding: 10px 20px; /* Padding around the text */
+    border: none; /* Remove button border */
+    border-radius: 5px; /* Add rounded corners */
+    text-decoration: none; /* Remove underlining from the link */
+}
