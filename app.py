@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 
-from mnop.Customer import customer_endpoints
+from Collections.Customer import customer_endpoints
+from utils.mongo_setup import insert_sample_data
 
 app = Flask(__name__)
 app.register_blueprint(customer_endpoints)
@@ -12,4 +13,6 @@ def hello_world():  # put application's code here
 
 
 if __name__ == '__main__':
+    print("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+    insert_sample_data()
     app.run(DEBUG=True)

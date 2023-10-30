@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Product Page</title>
+    <link href="../static/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- //Custom Theme files -->
+    <!-- web font -->
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+
+</head>
+<body>
+    <!-- Shopping Cart (Top Right) -->
+    <div class="shopping-cart">
+        <h2>Shopping Cart</h2>
+        <ul id="cart-items">
+            <!-- Cart items will be displayed here -->
+        </ul>
+        <p>Total: $<span id="cart-total">0.00</span></p>
+    </div>
+
+    <h1>Product Page</h1>
+
+    <!-- Product Listing -->
+    <div class="product-list">
+        {% for product in products %}
+        <div class="product">
+{#        <div>{{product}}</div>#}
+            <img src="{{ product['image_url'] }}" alt="{{ product['name'] }}">
+            <p>name : {{ product['name'] }}</p>
+            <p>{{ product.color }}</p>
+            <p>Price: ${{ product.cost }}</p>
+            <button class="add-to-cart" data-product-id="{{ product }}" id="add-cart" >Add to Cart</button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}">
+    </script>
+</body>
+</html>
