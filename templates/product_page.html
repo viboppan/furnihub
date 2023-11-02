@@ -17,8 +17,10 @@
             <!-- Cart items will be displayed here -->
         </ul>
         <p>Total: $<span id="cart-total">0.00</span></p>
-{#        <button class="go-to-cart-button"  id="go-to-cart-button"  >Go to Cart</button>#}
-       <a href="{{ url_for('cart_page') }}" class="go-to-cart-button">Go to Cart</a> <!-- Add this line -->
+        <button class="go-to-cart-button"
+                id="go-to-cart-button"
+                onclick="navigateToCart()">Go to Cart</button>
+{#       <a href="{{ url_for('cart_page') }}" class="go-to-cart-button" onclick =>Go to Cart</a> <!-- Add this line -->#}
     </div>
 
     <h1>Product Page</h1>
@@ -37,7 +39,7 @@
         {% endfor %}
     </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}">
+    <script type = "module" src="{{ url_for('static', filename='script.js') }}">
     </script>
 </body>
 </html>

@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 total += product.cost;
                 updateCart();
             }
+            // receiveDataFromSender(cart);
         });
     });
 
@@ -36,14 +37,14 @@ document.addEventListener('DOMContentLoaded', function() {
             listItem.innerText = `${item.name} - ${item.cost}`;
             cartItems.appendChild(listItem);
         });
-
         cartTotal.textContent = total.toFixed(2);
-
     }
 
     document.getElementById('go-to-cart-button').addEventListener('click', function() {
             // Redirect to the cart_page.html
-            window.location.href = "cart_page";
+        console.log("cart",JSON.stringify(cart));
+            const encodedData = encodeURIComponent(JSON.stringify(cart));
+            window.location.href = `cart_page?cd=${encodedData}`;
         });
 });
 

@@ -15,8 +15,12 @@ def hello_world():  # put application's code here
 def cart_page():  # put application's code here
     return render_template("cart_page.html")
 
+@app1.route('/customer/payment_page')
+def payment_page():  # put application's code here
+    return render_template("payment_page.html")
+
 
 if __name__ == '__main__':
     print("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-    #insert_sample_data()
+    # insert_sample_data()
     app1.run(debug=True)
