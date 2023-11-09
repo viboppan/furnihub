@@ -4,42 +4,49 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Product Page</title>
     <link href="../static/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../static/product_page.css" rel="stylesheet" type="text/css" media="all" />
+
     <!-- //Custom Theme files -->
     <!-- web font -->
     <link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 </head>
 <body>
     <!-- Shopping Cart (Top Right) -->
     <div class="shopping-cart">
-        <h2>Shopping Cart</h2>
-        <ul id="cart-items">
-            <!-- Cart items will be displayed here -->
-        </ul>
-        <p>Total: $<span id="cart-total">0.00</span></p>
-        <button class="go-to-cart-button"
-                id="go-to-cart-button"
-                onclick="navigateToCart()">Go to Cart</button>
-{#       <a href="{{ url_for('cart_page') }}" class="go-to-cart-button" onclick =>Go to Cart</a> <!-- Add this line -->#}
+         <div class="header-content">
+            <div class="logo">
+                <div class = "logo">Furnihub</div>
+            </div>
+            <div class="header-right">
+                <div class="greeting">
+                    Hello, <span id="username">Username</span>
+                </div>
+                <div class="cart" class="go-to-cart-button" id="go-to-cart-button">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </div>
+            </div>
+        </div>
     </div>
-
+    <div class = "break"></div>
     <h1>Product Page</h1>
 
     <!-- Product Listing -->
     <div class="product-list">
         {% for product in products %}
         <div class="product">
-{#        <div>{{product}}</div>#}
-            <img src="{{ product['image_url'] }}" alt="{{ product['name'] }}">
-            <p>name : {{ product['name'] }}</p>
+            <img src="{{ product['image_url'] }}" alt="{{ product['name'] }}" class = "product-image">
+            <p>Name : {{ product['name'] }}</p>
             <p>{{ product.color }}</p>
             <p>Price: ${{ product.cost }}</p>
-            <button class="add-to-cart" data-product-id="{{ product }}" id="add-cart" >Add to Cart</button>
+            <button class="add-to-cart" data-product-id="{{ product }}" id="add-cart" >
+                Add to Cart
+            </button>
         </div>
         {% endfor %}
     </div>
-
-    <script type = "module" src="{{ url_for('static', filename='script.js') }}">
-    </script>
+    <script type = "module" src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

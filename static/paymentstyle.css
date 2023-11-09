@@ -14,7 +14,7 @@ body {
     align-items: center;
     min-height: 100vh;
     background-color: #0C4160;
-
+    background: none;
     padding: 30px 10px;
 }
 

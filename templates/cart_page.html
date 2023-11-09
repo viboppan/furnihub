@@ -42,18 +42,17 @@
         <div class="col-lg-10 col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <button class="btn btn-sm bg-light border border-dark">GO BACK</button>
+                    <button class="btn btn-sm bg-light border border-dark" id = "go-back">GO BACK</button>
                 </div>
                 <div class="px-md-0 px-1" id="footer-font">
                     <b class="pl-md-4">SUBTOTAL<span class="pl-md-4" id = "total-cart"></span></b>
                 </div>
                 <div>
-                    <button class="btn btn-sm bg-dark text-white px-lg-5 px-3" id="payment-button">CONTINUE TO PAYMENT</button>
+                    <button class="btn btn-sm bg-dark text-white px-lg-5 px-3" id="payment-button">PROCEED TO PAYMENT </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script type="module"src="{{ url_for('static', filename='cart.js') }}">
-    </script>
+    <script type="module" src="{{ url_for('static', filename='cart.js') }}"></script>
 </body>

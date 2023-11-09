@@ -1,0 +1,126 @@
+body{
+    background: none;
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+.shopping-cart{
+    height:60px !important;
+    border: none;
+
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    /*background-color: #f9f9f9;*/
+    z-index: 1000;
+}
+.logo{
+    font-size: 56px;
+    color: #3e8e41;
+    font-weight: 700;
+}
+
+
+.product-image{
+  width:300px !important;
+  height: 300px !important;
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.product {
+    width: calc(25% - 30px);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 30px;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product p {
+    margin: 15px 0;
+    font-size: 22px !important;
+    color: #333333;
+}
+
+.add-to-cart {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.add-to-cart:hover {
+    background-color: #45a049;
+}
+
+.add-to-cart:active {
+    background-color: #3e8e41;
+}
+
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9; /* Customize the background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.break{
+    padding-top: 120px;
+}
+
+.logo {
+    /* Your logo styles */
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.greeting {
+    margin-right: 20px; /* Adjust the spacing between the greeting and the cart */
+    font-size: 24px;
+    color: #333333; /* Customize the text color */
+}
+
+.cart {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 24px; /* Adjust the font size to increase the size of the cart icon */
+}
+
+
+.cart i {
+    margin-right: 5px; /* Adjust the spacing between the cart icon and the number of items */
+}
