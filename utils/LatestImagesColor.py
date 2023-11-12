@@ -4,7 +4,6 @@ import re
 from bson import ObjectId
 from mongoengine import connect, Document, StringField, FloatField, ListField, FloatField, ObjectIdField
 from faker import Faker
-from colorthief import ColorThief
 import random
 
 fake = Faker()

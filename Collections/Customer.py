@@ -1,6 +1,7 @@
 from flask import request, Blueprint, render_template, session, redirect, url_for, jsonify, json
 from mongoengine import *
 
+from utils.MongoDBUtils import Order
 from utils.mongo_setup import Product
 
 customer_endpoints = Blueprint('customer_endpoints', __name__,
@@ -56,24 +57,64 @@ def login():
         customer = Customer.objects(username=username).first()
 
         if customer and customer.password == password:
-
-            # If username and password are correct, set a session variable
-            # session['username'] = username
             products = Product.objects()
+            order_ids = customer.order_history
+            orders = Order.objects(id__in=order_ids)
+            orders_data = orders_to_list_of_dicts(orders)
 
             # Convert the products to a list of dictionaries
             products_data = [
                 {"name": p.name, "cost": p.cost, "dimensions": p.dimensions, "color": p.color, "brand": p.brand,
                  "material": p.material_type, "weight": p.weight, "seller_id": p.seller_id,
                  "rating": p.rating, "image_url": p.image_url, "product_id": str(p.product_id)} for p in products]
-            # json_data = json.dumps(products_data, default=to_dict)
-            return render_template('product_page.html', products=products_data)
+            print("Orders : ")
+            print(orders_data)
+            return render_template('product_page.html', products=products_data, orders=orders_data)
             # return render_template('homepage.html')
         else:
             error = "Invalid username or password. Please try again."
             return error
 
     return render_template('creativelogin.html')
+
+    # Function to get orders for a given customer
+
+
+def get_orders_for_customer(customer):
+    order_ids = customer.order_history
+    orders = Order.objects(id__in=order_ids)
+    for order in orders:
+        print(f"Order cost: {order.total_cost}, order  id: {order.id}")
+    return orders
+
+
+# Function to convert Order to a dictionary
+def order_to_dict(order):
+    products_list = []
+    for product_bought in order.products:
+        product_dict = {
+            'product_id': str(product_bought.product_id.id),
+            'quantity': product_bought.quantity
+        }
+        products_list.append(product_dict)
+
+    order_dict = {
+        'customer_id': str(order.customer_id),
+        'products': products_list,
+        'order_date': order.order_date.strftime('%Y-%m-%d %H:%M:%S'),
+        'total_cost': order.total_cost,
+        'order_status': order.order_status
+    }
+    return order_dict
+
+
+# Function to convert multiple orders to a list of dictionaries
+def orders_to_list_of_dicts(orders):
+    orders_list = []
+    for order in orders:
+        order_dict = order_to_dict(order)
+        orders_list.append(order_dict)
+    return orders_list
 
 
 @customer_endpoints.route('/dashboard')
