@@ -1,4 +1,6 @@
 from mongoengine import *
+import datetime
+from bson import ObjectId
 
 
 class Admin(Document):
@@ -8,22 +10,29 @@ class Admin(Document):
     role = StringField()
 
 
-# class Customer(Document):
-#     username = StringField()
-#     email = EmailField()
-#     mobile_number = StringField()
-#     address = StringField()
-#     order_history = ListField(field=ObjectIdField)
+class Customer(Document):
+    username = StringField()
+    email = EmailField()
+    password = StringField()
+    mobile_number = StringField()
+    address = StringField()
+    order_history = ListField(ObjectIdField())
 
 
 class Product(Document):
+    product_id = ObjectIdField(default=ObjectId)
     name = StringField()
     cost = FloatField()
-    dimensions = StringField()
+    dimensions = ListField(FloatField())
     color = StringField()
+    brand = StringField()
     material_type = StringField()
     weight = FloatField()
+    seller_id = StringField()
     rating = FloatField()
+    image_url = StringField()
+    category = StringField()
+    description = StringField()
 
 
 class Seller(Document):
@@ -35,21 +44,20 @@ class Seller(Document):
 
 
 class ProductBought(EmbeddedDocument):
-    product_id = ObjectIdField()
-    quantity = IntField()
+    product_id = ReferenceField('Product', required=True)
+    quantity = IntField(min_value=1)
 
 
 class Order(Document):
-    customer_id = ObjectIdField()
+    customer_id = ObjectIdField(required=True)
     products = EmbeddedDocumentListField(ProductBought)
-    order_date = DateField()
+    order_date = DateTimeField(default=datetime.datetime.now)
     total_cost = FloatField()
-    order_status = StringField()
+    order_status = StringField(default='processing')
 
 
 class Payment(Document):
-    payment_id = ObjectIdField()
-    order_id = ObjectIdField()
+    order_id = ReferenceField(Order)
     payment_date = DateField()
     payment_method = StringField()
     amount = FloatField()

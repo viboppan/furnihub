@@ -1,10 +1,15 @@
 from flask import Flask, render_template
 
 from Collections.Customer import customer_endpoints
-from utils.mongo_setup import insert_sample_data
+from Collections.Order import order_endpoints
+from Collections.Payment import payment_endpoints
+from utils.MongoDBUtils import Order
+
 
 app1 = Flask(__name__)
 app1.register_blueprint(customer_endpoints)
+app1.register_blueprint(order_endpoints)
+app1.register_blueprint(payment_endpoints)
 
 
 @app1.route('/')

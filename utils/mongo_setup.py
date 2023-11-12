@@ -1,22 +1,9 @@
 import random
 
 from mongoengine import Document, StringField, FloatField, ListField, IntField, connect
+from utils.MongoDBUtils import  Product
 
 connect(host="mongodb://localhost:27017/furnihub")
-
-
-# Define the Product model
-class Product(Document):
-    name = StringField()
-    cost = FloatField()
-    dimensions = ListField(FloatField())
-    color = StringField()
-    brand = StringField()
-    material_type = StringField()
-    weight = FloatField()
-    seller_id = StringField()
-    rating = FloatField()
-    image_url = StringField()
 
 
 # MongoDB connection setup
@@ -40,9 +27,11 @@ def insert_sample_data():
         product.save()
     update_product_images()
 
+
 # Generate random image URLs
 def generate_random_image_url():
     return f"https://via.placeholder.com/{random.randint(200, 400)}x{random.randint(200, 400)}"
+
 
 # Update product documents with random image URLs
 def update_product_images():
@@ -51,6 +40,7 @@ def update_product_images():
     for product in products:
         product.image_url = generate_random_image_url()
         product.save()
+
 
 if __name__ == "__main__":
     update_product_images()

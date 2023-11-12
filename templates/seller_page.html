@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Page</title>
+    <link rel="stylesheet" href="css/seller_style.css">
+</head>
+<body>
+    <div class="seller-form-container">
+        <h1>Add a New Product</h1>
+        <form id="seller-form">
+            <label for="name">Product Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="cost">Cost:</label>
+            <input type="number" id="cost" required>
+
+            <label for="dimensions">Dimensions:</label>
+            <input type="text" id="dimensions" placeholder="Enter dimensions separated by commas">
+
+            <label for="color">Color:</label>
+            <input type="text" id="color">
+
+            <label for="brand">Brand:</label>
+            <input type="text" id="brand">
+
+            <label for="material">Material Type:</label>
+            <input type="text" id="material">
+
+            <label for="weight">Weight:</label>
+            <input type="number" id="weight">
+
+            <label for="category">Category:</label>
+            <input type="text" id="category">
+
+            <label for="description">Description:</label>
+            <textarea id="description"></textarea>
+
+            <label for="image-url">Image URL:</label>
+            <input type="text" id="image-url">
+
+            <button type="button" onclick="submitForm()">Submit</button>
+        </form>
+    </div>
+
+    <script src="seller.js"></script>
+</body>
+</html>

@@ -14,7 +14,7 @@ class Customer(Document):
     password = StringField()
     mobile_number = StringField()
     address = StringField()
-    order_history = ListField(field=ObjectIdField)
+    order_history = ListField(ObjectIdField())
 
 
 @customer_endpoints.route("/customer/add", methods=['POST'])
@@ -44,6 +44,8 @@ def to_dict(self):
         "rating": self.rating,
         "image_url": self.image_url
     }
+
+
 @customer_endpoints.route('/customer/login', methods=['POST'])
 def login():
     if request.method == 'POST':
@@ -63,7 +65,7 @@ def login():
             products_data = [
                 {"name": p.name, "cost": p.cost, "dimensions": p.dimensions, "color": p.color, "brand": p.brand,
                  "material": p.material_type, "weight": p.weight, "seller_id": p.seller_id,
-                 "rating": p.rating, "image_url": p.image_url} for p in products]
+                 "rating": p.rating, "image_url": p.image_url, "product_id": str(p.product_id)} for p in products]
             # json_data = json.dumps(products_data, default=to_dict)
             return render_template('product_page.html', products=products_data)
             # return render_template('homepage.html')
