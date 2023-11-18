@@ -55,7 +55,8 @@ def insert_products_from_images(folder_path):
                     rating=random.uniform(1, 5),
                     image_url=image_path,  # Store local path as image_url
                     category=category_folder,
-                    description="This awesome product provides you fabulous comfort"
+                    description="This awesome product provides you fabulous comfort",
+                    available_quantity=4
                 )
                 product.save()
                 # Rename the image file with the generated product ID

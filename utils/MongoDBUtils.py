@@ -33,7 +33,7 @@ class Product(Document):
     image_url = StringField()
     category = StringField()
     description = StringField()
-
+    available_quantity = IntField()
 
 class Seller(Document):
     seller_name = StringField()

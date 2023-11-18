@@ -66,7 +66,8 @@ def login():
             products_data = [
                 {"name": p.name, "cost": p.cost, "dimensions": p.dimensions, "color": p.color, "brand": p.brand,
                  "material": p.material_type, "weight": p.weight, "seller_id": p.seller_id,
-                 "rating": p.rating, "image_url": p.image_url, "product_id": str(p.id)} for p in products]
+                 "rating": p.rating, "image_url": p.image_url, "product_id": str(p.id),
+                 "available_quantity": p.available_quantity} for p in products]
             print("Orders : ")
             print(orders_data)
             return render_template('product_page.html', products=products_data, orders=orders_data)
