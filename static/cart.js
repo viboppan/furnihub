@@ -53,3 +53,12 @@ function deleteProduct(name) {
     localStorage.setItem('cart', JSON.stringify(cartProducts));
     location.reload(); // Refresh the page after the deletion
 }
+
+ var jsonData = {
+            productName: "Example Product",
+            price: 19.99,
+            quantity: 2
+        };
+
+        // Send JSON data to the payment page
+        window.postMessage({ type: 'cartData', data: jsonData }, '*');

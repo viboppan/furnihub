@@ -26,20 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // function updateCart() {
-    //     cartItems.innerHTML = '';
-    //
-    //     cart.forEach(item => {
-    //         console.log("from updateCart : "+item)
-    //         var product = JSON.stringify(item);
-    //         console.log(product.cost);
-    //         const listItem = document.createElement('li');
-    //         listItem.innerText = `${item.name} - ${item.cost}`;
-    //         cartItems.appendChild(listItem);
-    //     });
-    //     cartTotal.textContent = totalCost.toFixed(2);
-    // }
-
     document.getElementById('go-to-cart-button').addEventListener('click', function() {
             // Redirect to the cart_page.html
             let cartString = JSON.stringify(cart);

@@ -24,6 +24,10 @@ def cart_page():  # put application's code here
 def payment_page():  # put application's code here
     return render_template("payment_page.html")
 
+@app1.route('/customer/order_summary')
+def order_summary_page():  # put application's code here
+    return render_template("order_summary.html")
+
 
 if __name__ == '__main__':
     print("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
