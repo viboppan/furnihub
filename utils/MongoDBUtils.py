@@ -20,7 +20,7 @@ class Customer(Document):
 
 
 class Product(Document):
-    product_id = ObjectIdField(default=ObjectId)
+    # product_id = ObjectIdField(default=ObjectId)
     name = StringField()
     cost = FloatField()
     dimensions = ListField(FloatField())
