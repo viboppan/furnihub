@@ -2,7 +2,7 @@ import os
 import re
 
 from bson import ObjectId
-from mongoengine import connect, Document, StringField, FloatField, ListField, FloatField, ObjectIdField
+from mongoengine import connect, Document, StringField, FloatField, ListField, FloatField, ObjectIdField, IntField
 from faker import Faker
 import random
 
@@ -24,7 +24,7 @@ class Product(Document):
     image_url = StringField()
     category = StringField()
     description = StringField()
-
+    available_quantity = IntField()
 
 # MongoDB Connection
 connect(host="mongodb://localhost:27017/furnihub")
