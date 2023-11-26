@@ -26,7 +26,11 @@ function getATCButtons() {
 }
 
 function getProductsByCategory(category) {
-    return products.filter(product => product.category === category);
+    if (category.toLowerCase() === 'all') {
+        return products;
+    } else {
+        return products.filter(product => product.category === category);
+    }
 }
 
 function loadProducts(category) {
@@ -60,6 +64,9 @@ function loadProducts(category) {
 document.addEventListener('DOMContentLoaded', function() {
     var products = JSON.parse(JSON.stringify(productsData)); // Copy the data to a new array
 
+    var orders = JSON.parse(JSON.stringify(ordersData)); // Copy the data to a new array
+    console.log(orders);
+    const allProductsLink = document.getElementById('category-home');
     const coffeeTableLink = document.getElementById('coffee-table-link');
     const diningChairLink = document.getElementById('dining_chair-link');
     const diningSetLink = document.getElementById('dining_set_link');
@@ -72,6 +79,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial loading of products and attaching event listeners
     const initialFilteredProducts = loadProducts('coffee_table');
     getATCButtons(); // Attach event listeners
+
+    allProductsLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        const filteredProducts = loadProducts('all');
+        console.log("Load cart", cart);
+    });
 
     coffeeTableLink.addEventListener('click', function(event) {
         event.preventDefault();
@@ -120,5 +133,37 @@ document.addEventListener('DOMContentLoaded', function() {
         let cartString = JSON.stringify(cart);
         localStorage.setItem('cart', cartString);
         window.location.href = `cart_page`;
+    });
+
+
+    // -------------User Profile Section---------------
+    const userDropdown = document.getElementById('user-dropdown');
+    const userDropdownContent = document.getElementById('user-dropdown-content');
+
+    userDropdown.addEventListener('click', function () {
+        userDropdownContent.classList.toggle('show');
+    });
+
+    // Add click events for dropdown items
+    document.getElementById('logout').addEventListener('click', function () {
+        console.log("Logout");
+        // Implement logout functionality
+        // Example: window.location.href = 'logout_page';
+    });
+
+    document.getElementById('my-orders').addEventListener('click', function () {
+        console.log("My orders");
+        document.getElementById('ordersModal').style.display = 'block';
+
+        // Implement My Orders functionality
+        // Example: window.location.href = 'my_orders_page';
+    });
+
+    document.getElementById('profile').addEventListener('click', function () {
+        console.log("Profile");
+        document.getElementById('profileModal').style.display = 'block';
+
+        // Implement Profile functionality
+        // Example: window.location.href = 'profile_page';
     });
 });

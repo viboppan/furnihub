@@ -20,8 +20,14 @@
                 <div class = "logo">Furnihub</div>
             </div>
             <div class="header-right">
-                <div class="greeting">
-                    Hello, <span id="username">Username</span>
+                <div class="greeting" id="user-dropdown">
+                    <span id="username">Hello, Username</span>
+                    <div class="dropdown-content" id="user-dropdown-content">
+                        <a href="#" id="profile">My Profile</a>
+                        <a href="#" id="my-orders">My Orders</a>
+                        <a href="#" id="logout">Logout</a>
+
+                    </div>
                 </div>
                 <div class="cart" class="go-to-cart-button" id="go-to-cart-button">
                     <i class="fa fa-shopping-cart"></i>
@@ -30,10 +36,52 @@
             </div>
         </div>
     </div>
+
+     <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>My Profile</h2>
+                <span class="close" onclick="closeProfileModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Name: John Doe</p>
+                <p>ID: 123456</p>
+                <p>Email: john.doe@example.com</p>
+                <p>Mobile: +1 234-567-8901</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="ordersModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>My Orders</h2>
+                <span class="close" onclick="closeOrdersModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                {% for order in orders %}
+                    <p>Order Date: {{ order.order_date }}</p>
+                    <p>Order Status: {{ order.order_status }}</p>
+                    <p>Total Cost: ${{ order.total_cost }}</p>
+
+                    <h3>Products:</h3>
+                    <ul>
+                        {% for product in order.products %}
+                            <li>
+                                Product ID: {{ product.product_id }}, Quantity: {{ product.quantity }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
     <div class = "break"></div>
 <!--    <h1>Product Page</h1>-->
     <nav>
         <ul>
+            <li><a href="#" id = "category-home">Home</a></li>
             <li><a href="#" id = "coffee-table-link">Coffee Tables</a></li>
             <li><a  href="#" id = "dining_chair-link">Dining Chairs</a></li>
             <li><a href="#" id = "dining_set_link">Dining Sets</a></li>
@@ -64,6 +112,19 @@
         var products = [];
         products = {{ products|tojson|safe }};
         productsData = {{ products|tojson|safe }};
+
+        var orders = [];
+        orders = {{ orders|tojson|safe }};
+        ordersData = {{ orders|tojson|safe }};
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+
+        function closeOrdersModal(){
+            document.getElementById('ordersModal').style.display = 'none';
+        }
+
     </script>
     <script type = "module" src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
