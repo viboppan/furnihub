@@ -34,13 +34,13 @@
 <!--    <h1>Product Page</h1>-->
     <nav>
         <ul>
-            <li><a href="#" onclick="loadProducts('coffee_table')">Coffee Tables</a></li>
-            <li><a  href="#" onclick="loadProducts('dining_chair')">Dining Chairs</a></li>
-            <li><a href="#" onclick="loadProducts('dining_set')">Dining Sets</a></li>
-            <li><a href="#" onclick="loadProducts('office_chair')">Office Chairs</a></li>
-            <li><a href="#" onclick="loadProducts('reclyner')">Recliners</a></li>
-            <li><a href="#" onclick="loadProducts('shoe_cabinet')">Shoe Cabinets</a></li>
-            <li><a href="#" onclick="loadProducts('sofa')">Sofas</a></li>
+            <li><a href="#" id = "coffee-table-link">Coffee Tables</a></li>
+            <li><a  href="#" id = "dining_chair-link">Dining Chairs</a></li>
+            <li><a href="#" id = "dining_set_link">Dining Sets</a></li>
+            <li><a href="#" id = "office-chair-link">Office Chairs</a></li>
+            <li><a href="#" id = "recliners-link">Recliners</a></li>
+            <li><a href="#" id = "shoe-cabinet-link">Shoe Cabinets</a></li>
+            <li><a href="#" id = "sofa-link">Sofas</a></li>
         </ul>
     </nav>
 
@@ -59,53 +59,12 @@
         </div>
         {% endfor %}
     </div>
-    <script type = "module" src="{{ url_for('static', filename='script.js') }}"></script>
+
     <script>
-    // Define an empty array to store products
-    var products = [];
-
-    // Debug statement to check the content of the products array
-    console.log('Initial products:', products);
-
-    // Set the initial products data from Flask to the 'products' array
-    products = {{ products|tojson|safe }};
-
-    // Debug statement to check the content of the products array after setting the initial data
-    console.log('Products after setting initial data:', products);
-
-    // Function to get products based on category (replace this with your API call)
-    function getProductsByCategory(category) {
-        return products.filter(product => product.category === category);
-    }
-
-    // Function to load products
-    function loadProducts(category) {
-        // Update the product listing
-        const productListElement = document.getElementById('product-type');
-        productListElement.innerHTML = '';
-
-        // Use the getProductsByCategory function to filter products based on the category
-        const filteredProducts = getProductsByCategory(category);
-
-        filteredProducts.forEach(product => {
-            console.log(product);
-            const productElement = document.createElement('div');
-            productElement.className = 'product';
-            productElement.innerHTML = `
-                <img src="${product.image_url}" alt="${product.name}" class="product-image">
-                <p>Name: ${product.name}</p>
-                <p>${product.color}</p>
-                <p>Price: $${product.cost}</p>
-                <p>ID: ${product.product_id}</p>
-                <button class="add-to-cart" data-product-id='${JSON.stringify(product)}' id="add-cart">
-                    Add to Cart
-                </button>
-            `;
-            productListElement.appendChild(productElement);
-        });
-    }
-</script>
-
-
+        var products = [];
+        products = {{ products|tojson|safe }};
+        productsData = {{ products|tojson|safe }};
+    </script>
+    <script type = "module" src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
