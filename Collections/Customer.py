@@ -38,8 +38,17 @@ def to_dict(self):
     }
 
 
+def customer_to_dict(customer):
+    return {
+        'username': customer.username,
+        'email': customer.email,
+        'mobile_number' : customer.mobile_number
+    }
+
+
 def get_product_page(username):
     customer = Customer.objects(username=username).first()
+    customer_data = customer_to_dict(customer)
     products = Product.objects()
     order_ids = customer.order_history
     orders = Order.objects(id__in=order_ids)
@@ -53,7 +62,7 @@ def get_product_page(username):
          "available_quantity": p.available_quantity, "category": p.category} for p in products]
     print("Orders : ")
     print(orders_data)
-    return render_template('product_page.html', products=products_data, orders=orders_data, customer=customer)
+    return render_template('product_page.html', products=products_data, orders=orders_data, customer=customer_data)
 
 
 @customer_endpoints.route('/customer/login', methods=['POST'])
