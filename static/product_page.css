@@ -222,8 +222,8 @@ nav a:hover {
             margin-top:10%;
             border: 1px solid #888;
             width: 60%;
-            height:60%;
-            overflow-y: auto;
+            /*height:60%;*/
+            /*overflow-y: auto;*/
         }
 
         /* Style for the modal header */
@@ -283,6 +283,8 @@ nav a:hover {
             /* Additional styling for a more sophisticated look */
             line-height: 1.6;
             color: #333; /* Set the text color */
+            height:27rem;
+            overflow-y: auto;
         }
 
         /* Adjust the font sizes for specific elements within the modal body */
