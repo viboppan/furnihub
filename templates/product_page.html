@@ -43,39 +43,57 @@
                 <h2>My Profile</h2>
                 <span class="close" onclick="closeProfileModal()">&times;</span>
             </div>
-            <div class="modal-body">
-                <p>Name: John Doe</p>
+           <div class="profile-info">
+            <img src="../static/images/common/profile_default.jpg" alt="Profile Image" class="profile-image">
+            <div class="profile-details">
+                <h2>Name in Big Letters</h2>
                 <p>ID: 123456</p>
                 <p>Email: john.doe@example.com</p>
                 <p>Mobile: +1 234-567-8901</p>
             </div>
         </div>
+        </div>
     </div>
 
     <div id="ordersModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>My Orders</h2>
-                <span class="close" onclick="closeOrdersModal()">&times;</span>
-            </div>
-            <div class="modal-body">
-                {% for order in orders %}
-                    <p>Order Date: {{ order.order_date }}</p>
-                    <p>Order Status: {{ order.order_status }}</p>
-                    <p>Total Cost: ${{ order.total_cost }}</p>
-
-                    <h3>Products:</h3>
-                    <ul>
-                        {% for product in order.products %}
-                            <li>
-                                Product ID: {{ product.product_id }}, Quantity: {{ product.quantity }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endfor %}
-            </div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>My Orders</h2>
+            <span class="close" onclick="closeOrdersModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            {% for order in orders %}
+                <div class="order">
+                    <div class = "order-head">
+                        <div>
+                            <div class="order-number">Order #{{ order.order_number }}</div>
+                            <div class="order-status">{{ order.order_status }}</div>
+                        </div>
+                        <div>
+                            <button class="cancel-order-button" data-product-id="{{ product }}" id="cancel-order" >
+                                Cancel Order
+                            </button>
+                        </div>
+                    </div>
+                    <p class="total-cost">Total Cost: ${{ order.total_cost }}</p>
+                    <div class = "orders-list">
+                    {% for product in order.products %}
+                        <div class="product-card">
+                            <img src="{{ product.image_url }}" alt="{{ product.name }}" class="order-image">
+                            <div class="product-details">
+                                <p>Name: {{ product.name }}</p>
+                                <p>Product ID: {{ product.product_id }}</p>
+                                <p>Quantity: {{ product.quantity }}</p>
+                                <!-- Add more details as needed -->
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
+</div>
 
     <div class = "break"></div>
 <!--    <h1>Product Page</h1>-->
@@ -93,19 +111,18 @@
     </nav>
 
     <!-- Product Listing -->
-    <div class="product-list" id = "product-type">
-        {% for product in products %}
-        <div class="product">
-            <img src="{{ product['image_url'] }}" alt="{{ product['name'] }}" class = "product-image">
-            <p>Name : {{ product['name'] }}</p>
-            <p>{{ product.color }}</p>
-            <p>Price: ${{ product.cost }}</p>
-            <p>id: ${{ product.product_id }}</p>
-            <button class="add-to-cart" data-product-id="{{ product }}" id="add-cart" >
-                Add to Cart
-            </button>
+    <div class="product-list" id = "product-type"></div>
+
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Product Details</h2>
+                <span class="close" onclick="closeProductModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="product-details">
+                <!-- Product details will be displayed here dynamically -->
+            </div>
         </div>
-        {% endfor %}
     </div>
 
     <script>
@@ -123,6 +140,12 @@
 
         function closeOrdersModal(){
             document.getElementById('ordersModal').style.display = 'none';
+        }
+
+        // Function to close product modal
+        function closeProductModal(){
+            var modal = document.getElementById('productModal');
+            modal.style.display = 'none';
         }
 
     </script>

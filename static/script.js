@@ -7,23 +7,73 @@ function getATCButtons() {
     document.getElementById('cart-count').innerText = cart.length;
 
     addToCartButtons.forEach(button => {
-        // Check if the event listener has been attached before attaching it
         if (!button.hasEventListener) {
             button.hasEventListener = true; // Mark the button to avoid attaching multiple event listeners
             button.addEventListener('click', function(e) {
                 var product = button.getAttribute('data-product-id');
                 product = JSON.parse(product.replace(/'/g, '"'));
-                if (product) {
+               if (product) {
                     cart.push(product);
                     totalCost += product.cost;
                     document.getElementById('cart-count').innerText = cart.length;
-                }
+               }
             });
         }
     });
-
+    console.log(cart);
     return cart;
 }
+
+function getViewProductButtons() {
+    console.log("Get view Products");
+    const viewProductButtons = document.querySelectorAll('.view-product');
+    let totalCost = 0;
+    // document.getElementById('cart-count').innerText = cart.length;
+
+    viewProductButtons.forEach(button => {
+        // Check if the event listener has been attached before attaching it
+        if (!button.hasEventListener) {
+            button.hasEventListener = true; // Mark the button to avoid attaching multiple event listeners
+            button.addEventListener('click', function(e) {
+               console.log("clicked");
+               let product = button.getAttribute('data-product-id');
+                product = JSON.parse(product.replace(/'/g, '"'));
+               openProductModal(product);
+            });
+        }
+    });
+}
+
+// ------------- View Product Section -------------- //
+    function openProductModal(product) {
+        console.log("Open modal");
+        var modal = document.getElementById('productModal');
+        var modalContent = document.getElementById('product-details');
+
+        // Clear previous content
+        modalContent.innerHTML = '';
+
+        // Add product details to modal content
+        var productName = document.createElement('p');
+        productName.textContent = 'Name: ' + product.name;
+
+        var productColor = document.createElement('p');
+        productColor.textContent = 'Color: ' + product.color;
+
+        var productPrice = document.createElement('p');
+        productPrice.textContent = 'Price: $' + product.cost;
+
+        // Add more details as needed
+
+        // Append elements to modal content
+        modalContent.appendChild(productName);
+        modalContent.appendChild(productColor);
+        modalContent.appendChild(productPrice);
+
+        // Display the modal
+        modal.style.display = 'block';
+    }
+
 
 function getProductsByCategory(category) {
     if (category.toLowerCase() === 'all') {
@@ -40,9 +90,10 @@ function loadProducts(category) {
     const filteredProducts = getProductsByCategory(category);
 
     filteredProducts.forEach(product => {
-        const productElement = document.createElement('div');
-        productElement.className = 'product';
-        productElement.innerHTML = `
+        if(product.available_quantity>0) {
+            const productElement = document.createElement('div');
+            productElement.className = 'product';
+            productElement.innerHTML = `
             <img src="${product.image_url}" alt="${product.name}" class="product-image">
             <p>Name: ${product.name}</p>
             <p>${product.color}</p>
@@ -51,13 +102,17 @@ function loadProducts(category) {
             <button class="add-to-cart" data-product-id='${JSON.stringify(product)}' id="add-cart">
                 Add to Cart
             </button>
+            <button class="view-product" data-product-id='${JSON.stringify(product)}' id="view-cart">
+                View to Cart
+            </button>
         `;
-        productListElement.appendChild(productElement);
+            productListElement.appendChild(productElement);
+        }
     });
 
     // Reattach event listeners for the "Add to Cart" buttons
     getATCButtons();
-
+    getViewProductButtons();
     return filteredProducts; // Return the filtered products
 }
 
@@ -79,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial loading of products and attaching event listeners
     const initialFilteredProducts = loadProducts('coffee_table');
     getATCButtons(); // Attach event listeners
+    getViewProductButtons();
 
     allProductsLink.addEventListener('click', function(event) {
         event.preventDefault();
@@ -136,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-    // -------------User Profile Section---------------
+    // -------------User Profile Section--------------- //
     const userDropdown = document.getElementById('user-dropdown');
     const userDropdownContent = document.getElementById('user-dropdown-content');
 
@@ -166,4 +222,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Implement Profile functionality
         // Example: window.location.href = 'profile_page';
     });
+
+    // -------------User Profile Section--------------- //
+
+
+
+
 });

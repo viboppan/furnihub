@@ -2,7 +2,7 @@
 
 let cartDetails = localStorage.getItem('cart');
 let payload = {
-  "customer_id": "653f4f2bc4568a5bbc0d0ceb",
+  "customer_id": "655a4e300d5cfaf04a8daca5",
   "products": [],
   "total_cost": 0
 };

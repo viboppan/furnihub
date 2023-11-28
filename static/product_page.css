@@ -58,7 +58,7 @@ body{
     color: #333333;
 }
 
-.add-to-cart {
+.add-to-cart, .view-product {
     display: block;
     width: 100%;
     padding: 15px;
@@ -220,10 +220,10 @@ nav a:hover {
             background-color: #fefefe;
             margin: 15% auto;
             margin-top:10%;
-            padding: 20px;
             border: 1px solid #888;
             width: 60%;
             height:60%;
+            overflow-y: auto;
         }
 
         /* Style for the modal header */
@@ -231,12 +231,42 @@ nav a:hover {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: #f2f2f2;
+            padding: 2%;
+        }
+
+         /* Styles for the profile information within the modal */
+        .profile-info {
+            display: flex;
+            align-items: center;
+            margin: 5%;
+        }
+
+        .profile-image {
+            width: 200px; /* Adjust the size of the profile image */
+            height: 200px;
+            border-radius: 50%;
+            margin-right: 8%;
+        }
+
+        .profile-details {
+            flex-grow: 1;
+        }
+
+        .profile-details h2 {
+            font-size: 32px; /* Increase the font size for the name */
+            margin-bottom: 10px;
+        }
+
+        .profile-details p {
+            font-size: 16px;
+            margin-bottom: 8px;
         }
 
         /* Style for the close button */
         .close {
             color: #aaa;
-            font-size: 20px;
+            font-size: 32px;
             font-weight: bold;
             cursor: pointer;
         }
@@ -244,3 +274,102 @@ nav a:hover {
         .close:hover {
             color: black;
         }
+        .modal-body {
+            /*padding: 20px;*/
+            padding: 2%;
+            font-family: 'Roboto', sans-serif; /* Use the specified font or choose another elegant font */
+            font-size: 16px; /* Set the base font size for the modal body */
+
+            /* Additional styling for a more sophisticated look */
+            line-height: 1.6;
+            color: #333; /* Set the text color */
+        }
+
+        /* Adjust the font sizes for specific elements within the modal body */
+        .modal-header h2 {
+            font-size: 24px; /* Increase the font size for headings */
+        }
+
+        .modal-body p {
+            font-size: 18px; /* Increase the font size for paragraphs */
+        }
+
+        /* order section css*/
+        /* Styles for individual orders */
+        .order {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd; /* Add a line to separate orders */
+            padding-bottom: 20px;
+        }
+        .order-head{
+            display:flex;
+            justify-content: space-between;
+        }
+
+        /* Styles for the order number section */
+        .order-number {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Styles for the order status box */
+        .order-status {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #4CAF50; /* Green color for 'Completed' status, you can change it */
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        /* Styles for the total cost */
+        .total-cost {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+
+        .orders-list{
+            display: flex;
+        }
+
+        /* Styles for the product card */
+        .product-card {
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            width: 25%;
+            text-align: center;
+            height: 250px;
+            padding: 1%;
+        }
+
+        .order-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+        }
+
+        .product-details {
+            padding: 10px;
+        }
+
+        .product-details p {
+            margin: 0;
+        }
+
+        .cancel-order-button{
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #828282;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+
