@@ -40,6 +40,7 @@ def to_dict(self):
 
 def customer_to_dict(customer):
     return {
+        'id': customer.id,
         'username': customer.username,
         'email': customer.email,
         'mobile_number' : customer.mobile_number
