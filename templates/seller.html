@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <!-- Add your CSS stylesheets here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        form {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="row">
+    <div class="col-6">
+        <h2>Add Product</h2>
+    <form id="productForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="cost">Cost:</label>
+        <input type="number" id="cost" name="cost" step="0.01" required>
+
+        <label for="dimensions">Dimensions:</label>
+        <input type="text" id="dimensions" name="dimensions" placeholder="e.g., 10.0, 5.0, 2.5" required>
+
+        <label for="color">Color:</label>
+        <input type="text" id="color" name="color" required>
+
+        <label for="brand">Brand:</label>
+        <input type="text" id="brand" name="brand" required>
+
+        <label for="material_type">Material Type:</label>
+        <input type="text" id="material_type" name="material_type" required>
+
+        <label for="weight">Weight:</label>
+        <input type="number" id="weight" name="weight" step="0.01" required>
+
+        <label for="seller_id">Seller ID:</label>
+        <input type="text" id="seller_id" name="seller_id" value="656405034ea6f6951b8deb59" readonly>
+
+        <label for="rating">Rating:</label>
+        <input type="number" id="rating" name="rating" step="0.1">
+
+        <label for="image">Select Image: </label>
+        <input type="file" id="image" name="image" accept="image/*">
+
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category">
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea>
+
+        <label for="available_quantity">Available Quantity:</label>
+        <input type="number" id="available_quantity" name="available_quantity" required>
+
+        <button type="button" onclick="addProduct()">Add Product</button>
+    </form>
+    </div>
+    <div class="col-6">
+        This div is for order requests
+    </div>
+</div>
+
+
+    <!-- Add your JavaScript script here -->
+    <script>
+        function addProduct() {
+            console.log("I am here")
+            // Fetch form data and perform the necessary actions (e.g., send data to the server)
+            var formData = new FormData(document.getElementById("productForm"));
+
+            // Example: Log form data to the console
+            for (var pair of formData.entries()) {
+                console.log(pair[0] + ': ' + pair[1]);
+            }
+
+            // You may want to send the data to your server using AJAX or fetch
+            // You can handle this based on your server-side implementation
+
+            // Use AJAX to send the form data to the server
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:5000/add_product", true);
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // Handle the response from the server (e.g., display a success message)
+                var response = JSON.parse(xhr.responseText);
+                console.log(response);
+            }
+        };
+
+        xhr.send(formData);
+        }
+    </script>
+</body>
+</html>

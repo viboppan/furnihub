@@ -26,6 +26,7 @@ class Product(Document):
     description = StringField()
     available_quantity = IntField()
 
+
 # MongoDB Connection
 connect(host="mongodb://localhost:27017/furnihub")
 
@@ -45,18 +46,18 @@ def insert_products_from_images(folder_path):
                 # Create a new Product document with random data and detected color
                 product = Product(
                     name=f"{category_folder}{idx + 1}",
-                    cost=random.uniform(50, 500),
-                    dimensions=[random.uniform(1, 10) for _ in range(3)],
+                    cost=round(random.uniform(50, 500),2),
+                    dimensions=[round(random.uniform(1, 10),0) for _ in range(3)],
                     color="brown",
                     brand=fake.company(),
                     material_type="wood",
-                    weight=random.uniform(1, 50),
-                    seller_id=fake.uuid4(),
-                    rating=random.uniform(1, 5),
+                    weight=round(random.uniform(1, 50),2),
+                    seller_id="6565322f1c2a67f983d91232",
+                    rating=round(random.uniform(1, 5),1),
                     image_url=image_path,  # Store local path as image_url
                     category=category_folder,
                     description="This awesome product provides you fabulous comfort",
-                    available_quantity=4
+                    available_quantity=round(random.uniform(4, 40),0)
                 )
                 product.save()
                 # Rename the image file with the generated product ID

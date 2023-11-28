@@ -1,21 +1,12 @@
 from flask import request, Blueprint, render_template, session, redirect, url_for, jsonify, json
 from mongoengine import *
 
-from utils.MongoDBUtils import Order
+from utils.MongoDBUtils import Order, Customer
 from utils.mongo_setup import Product
 
 customer_endpoints = Blueprint('customer_endpoints', __name__,
                                template_folder='templates')
 connect(host="mongodb://localhost:27017/furnihub")
-
-
-class Customer(Document):
-    username = StringField()
-    email = EmailField()
-    password = StringField()
-    mobile_number = StringField()
-    address = StringField()
-    order_history = ListField(ObjectIdField())
 
 
 @customer_endpoints.route("/customer/add", methods=['POST'])
@@ -47,6 +38,24 @@ def to_dict(self):
     }
 
 
+def get_product_page(username):
+    customer = Customer.objects(username=username).first()
+    products = Product.objects()
+    order_ids = customer.order_history
+    orders = Order.objects(id__in=order_ids)
+    orders_data = orders_to_list_of_dicts(orders)
+
+    # Convert the products to a list of dictionaries
+    products_data = [
+        {"name": p.name, "cost": p.cost, "dimensions": p.dimensions, "color": p.color, "brand": p.brand,
+         "material": p.material_type, "weight": p.weight, "seller_id": p.seller_id,
+         "rating": p.rating, "image_url": p.image_url, "product_id": str(p.id),
+         "available_quantity": p.available_quantity, "category": p.category} for p in products]
+    print("Orders : ")
+    print(orders_data)
+    return render_template('product_page.html', products=products_data, orders=orders_data, customer=customer)
+
+
 @customer_endpoints.route('/customer/login', methods=['POST'])
 def login():
     if request.method == 'POST':
@@ -55,22 +64,9 @@ def login():
 
         # Check if the user exists
         customer = Customer.objects(username=username).first()
-
         if customer and customer.password == password:
-            products = Product.objects()
-            order_ids = customer.order_history
-            orders = Order.objects(id__in=order_ids)
-            orders_data = orders_to_list_of_dicts(orders)
+            return get_product_page(username)
 
-            # Convert the products to a list of dictionaries
-            products_data = [
-                {"name": p.name, "cost": p.cost, "dimensions": p.dimensions, "color": p.color, "brand": p.brand,
-                 "material": p.material_type, "weight": p.weight, "seller_id": p.seller_id,
-                 "rating": p.rating, "image_url": p.image_url, "product_id": str(p.id),
-                 "available_quantity": p.available_quantity, "category" : p.category} for p in products]
-            print("Orders : ")
-            print(orders_data)
-            return render_template('product_page.html', products=products_data, orders=orders_data)
             # return render_template('homepage.html')
         else:
             error = "Invalid username or password. Please try again."

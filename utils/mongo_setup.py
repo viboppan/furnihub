@@ -1,7 +1,7 @@
 import random
 
 from mongoengine import Document, StringField, FloatField, ListField, IntField, connect
-from utils.MongoDBUtils import  Product
+from utils.MongoDBUtils import Product
 
 connect(host="mongodb://localhost:27017/furnihub")
 

@@ -35,6 +35,7 @@ class Product(Document):
     description = StringField()
     available_quantity = IntField()
 
+
 class Seller(Document):
     seller_name = StringField()
     email = EmailField()
