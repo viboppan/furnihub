@@ -12,11 +12,11 @@ function getATCButtons() {
             button.addEventListener('click', function(e) {
                 var product = button.getAttribute('data-product-id');
                 product = JSON.parse(product.replace(/'/g, '"'));
-               if (product) {
+                if (product) {
                     cart.push(product);
                     totalCost += product.cost;
                     document.getElementById('cart-count').innerText = cart.length;
-               }
+                }
             });
         }
     });
@@ -34,21 +34,21 @@ function getViewProductButtons() {
         if (!button.hasEventListener) {
             button.hasEventListener = true; // Mark the button to avoid attaching multiple event listeners
             button.addEventListener('click', function(e) {
-               console.log("clicked");
-               let product = button.getAttribute('data-product-id');
+                console.log("clicked");
+                let product = button.getAttribute('data-product-id');
                 product = JSON.parse(product.replace(/'/g, '"'));
-               openProductModal(product);
+                openProductModal(product);
             });
         }
     });
 }
 
 // ------------- View Product Section -------------- //
-    function openProductModal(product) {
-        var modal = document.getElementById('productModal');
-        var modalContent = document.getElementById('product-details');
+function openProductModal(product) {
+    var modal = document.getElementById('productModal');
+    var modalContent = document.getElementById('product-details');
 
-        modalContent.innerHTML = `
+    modalContent.innerHTML = `
              <div class = "view-product-div">
                 <div class = "pl-4">
                   <img id="product-image" width="400" height="400" alt="${product.name}" src="${product.image_url}" />
@@ -68,9 +68,8 @@ function getViewProductButtons() {
                   <!-- Add other details as needed -->
                 </div>
             </div>`;
-        modal.style.display = 'block';
-    }
-
+    modal.style.display = 'block';
+}
 
 function getProductsByCategory(category) {
     if (category.toLowerCase() === 'all') {
@@ -87,7 +86,7 @@ function loadProducts(category) {
     const filteredProducts = getProductsByCategory(category);
 
     filteredProducts.forEach(product => {
-        if(product.available_quantity>0) {
+        if (product.available_quantity > 0) {
             const productElement = document.createElement('div');
             productElement.className = 'product';
             productElement.innerHTML = `
@@ -193,25 +192,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const userDropdown = document.getElementById('user-dropdown');
     const userDropdownContent = document.getElementById('user-dropdown-content');
 
-    userDropdown.addEventListener('click', function () {
+    userDropdown.addEventListener('click', function() {
         userDropdownContent.classList.toggle('show');
     });
 
     // Add click events for dropdown items
-    document.getElementById('logout').addEventListener('click', function () {
+    document.getElementById('logout').addEventListener('click', function() {
         console.log("Logout");
         // Implement logout functionality
         // Example: window.location.href = 'logout_page';
+        localStorage.setItem("cart","");
+        localStorage.setItem("cData","");
+        window.location.href = '/';
     });
 
-    document.getElementById('my-orders').addEventListener('click', function () {
+    document.getElementById('my-orders').addEventListener('click', function() {
         document.getElementById('ordersModal').style.display = 'block';
         console.log(orders);
 
         let orderModal = document.getElementById('order-model');
 
         orders.forEach(order => {
-        var orderHTML = `
+            var orderHTML = `
             <div class="order">
                 <div class="order-head">
                     <div>
@@ -248,13 +250,13 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
 
-        // Append each order's HTML to the container
-        orderModal.innerHTML += orderHTML;
-    });
+            // Append each order's HTML to the container
+            orderModal.innerHTML += orderHTML;
+        });
 
     });
 
-    document.getElementById('profile').addEventListener('click', function () {
+    document.getElementById('profile').addEventListener('click', function() {
         document.getElementById('profileModal').style.display = 'block';
     });
 

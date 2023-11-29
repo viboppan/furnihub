@@ -65,6 +65,16 @@ function proceedPayment(e) {
         .catch(error => {
             console.error('Error:', error);
         });
+
+    // const url1 = 'http://localhost:5000/add_payment';
+    // postData(url, payload)
+    //     .then(responseData => {
+    //         console.log('Success:', responseData);
+    //         window.location.href = `order_summary`;
+    //     })
+    //     .catch(error => {
+    //         console.error('Error:', error);
+    //     });
 }
 
 // Validation functions
