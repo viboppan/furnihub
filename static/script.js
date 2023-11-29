@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="order">
                 <div class="order-head">
                     <div>
-                        <div class="order-number">Order #${order.customer_id}</div>
+                        <div class="order-number">Order #${order.order_id}</div>
                         <div class="order-status">${order.order_status}</div>
                     </div>
                     <div>
