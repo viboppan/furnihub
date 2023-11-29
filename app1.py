@@ -15,6 +15,11 @@ app1.register_blueprint(seller_endpoints)
 app1.register_blueprint(product_endpoints)
 
 
+@app1.after_request
+def add_header(response):
+    response.cache_control.no_store = True
+    return response
+
 @app1.route('/')
 def hello_world():  # put application's code here
     return render_template("creativelogin.html")
