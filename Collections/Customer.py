@@ -15,7 +15,8 @@ def add_user():
         customer = Customer(username=request.form.get('username'),
                             email=request.form.get('email'),
                             password=request.form.get('password'),
-                            mobile_number=request.form.get('phone'))
+                            mobile_number=request.form.get('phone'),
+                            address=request.form.get('address'))
         customer.save()
         return render_template('homepage.html')
     else:
@@ -47,8 +48,8 @@ def customer_to_dict(customer):
     }
 
 
-def get_product_page(username):
-    customer = Customer.objects(username=username).first()
+def get_product_page(customerid):
+    customer = Customer.objects(id=customerid).first()
     customer_data = customer_to_dict(customer)
     products = Product.objects()
     order_ids = customer.order_history
@@ -75,7 +76,7 @@ def login():
         # Check if the user exists
         customer = Customer.objects(username=username).first()
         if customer and customer.password == password:
-            return get_product_page(username)
+            return get_product_page(customer.id)
 
             # return render_template('homepage.html')
         else:

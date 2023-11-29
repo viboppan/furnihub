@@ -22,7 +22,6 @@ def seller_to_dict(seller):
         'seller_name': seller.seller_name,
         'email': seller.email,
         'contact_number': seller.contact_number,
-        'brand': seller.brand,
         'products': products_list
     }
 

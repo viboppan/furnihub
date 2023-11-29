@@ -17,7 +17,7 @@ app1.register_blueprint(product_endpoints)
 
 @app1.route('/')
 def hello_world():  # put application's code here
-    return render_template("seller_login.html")
+    return render_template("creativelogin.html")
 
 
 @app1.route('/customer/cart_page')

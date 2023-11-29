@@ -76,9 +76,9 @@ def add_product():
         return jsonify({"error": str(e)}), 500
 
 
-@product_endpoints.route("/get_product_page/<username>", methods=['GET'])
-def go_to_home(username):
-    get_product_page(username)
+@product_endpoints.route("/get_product_page/<customerid>", methods=['GET'])
+def go_to_home(customerid):
+    get_product_page(customerid)
 
 # @product_endpoints.route("/add_product_old", methods=['POST'])
 # def add_product():

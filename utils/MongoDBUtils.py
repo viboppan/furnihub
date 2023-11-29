@@ -40,7 +40,6 @@ class Seller(Document):
     seller_name = StringField()
     email = EmailField()
     contact_number = StringField()
-    brand = StringField()
     products = ListField(field=ObjectIdField)
 
 
