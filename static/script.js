@@ -28,7 +28,6 @@ function getViewProductButtons() {
     console.log("Get view Products");
     const viewProductButtons = document.querySelectorAll('.view-product');
     let totalCost = 0;
-    // document.getElementById('cart-count').innerText = cart.length;
 
     viewProductButtons.forEach(button => {
         // Check if the event listener has been attached before attaching it
@@ -46,31 +45,29 @@ function getViewProductButtons() {
 
 // ------------- View Product Section -------------- //
     function openProductModal(product) {
-        console.log("Open modal");
         var modal = document.getElementById('productModal');
         var modalContent = document.getElementById('product-details');
 
-        // Clear previous content
-        modalContent.innerHTML = '';
-
-        // Add product details to modal content
-        var productName = document.createElement('p');
-        productName.textContent = 'Name: ' + product.name;
-
-        var productColor = document.createElement('p');
-        productColor.textContent = 'Color: ' + product.color;
-
-        var productPrice = document.createElement('p');
-        productPrice.textContent = 'Price: $' + product.cost;
-
-        // Add more details as needed
-
-        // Append elements to modal content
-        modalContent.appendChild(productName);
-        modalContent.appendChild(productColor);
-        modalContent.appendChild(productPrice);
-
-        // Display the modal
+        modalContent.innerHTML = `
+             <div class = "view-product-div">
+                <div class = "pl-4">
+                  <img id="product-image" width="400" height="400" alt="${product.name}" src="${product.image_url}" />
+                </div>
+            
+                <div class="view-product-details">
+                  <h2 style = "font-size: 32px; font-weight: 700">${product.name}</h2>
+                  <p><b>Cost:</b> ${product.cost}</p>
+                  <p><b>Dimensions:</b> ${product.dimensions}</p>
+                  <p><b>Color:</b> ${product.color}</p>
+                  <p><b>Brand:</b> ${product.brand}</p>
+                  <p><b>Type:</b> ${product.type}</p>
+                  <p><b>Material:</b> ${product.material}</p>
+                  <p><b>Weight:</b> ${product.weight}</p>
+                  <p><b>Rating:</b> ${product.rating}</p>
+                  <p><b>Description:</b> ${product.description}</p>
+                  <!-- Add other details as needed -->
+                </div>
+            </div>`;
         modal.style.display = 'block';
     }
 
@@ -103,7 +100,7 @@ function loadProducts(category) {
                 Add to Cart
             </button>
             <button class="view-product" data-product-id='${JSON.stringify(product)}' id="view-cart">
-                View to Cart
+                View Product
             </button>
         `;
             productListElement.appendChild(productElement);
@@ -208,24 +205,58 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('my-orders').addEventListener('click', function () {
-        console.log("My orders");
         document.getElementById('ordersModal').style.display = 'block';
+        console.log(orders);
 
-        // Implement My Orders functionality
-        // Example: window.location.href = 'my_orders_page';
+        let orderModal = document.getElementById('order-model');
+
+        orders.forEach(order => {
+        var orderHTML = `
+            <div class="order">
+                <div class="order-head">
+                    <div>
+                        <div class="order-number">Order #${order.customer_id}</div>
+                        <div class="order-status">${order.order_status}</div>
+                    </div>
+                    <div>
+                        <button class="cancel-order-button" data-product-id="${order.products}" id="cancel-order">
+                            Cancel Order
+                        </button>
+                    </div>
+                </div>
+                <p class="total-cost">Total Cost: $${order.total_cost}</p>
+                <div class="orders-list">
+                   ${order.products.map(currentProduct => {
+                        var product = products.find(p => p.product_id === currentProduct.product_id);
+                        console.log(product);
+                        if (product) {
+                            return `
+                                <div class="product-card">
+                                    <img src="${product.image_url}" alt="${product.name}" class="order-image">
+                                    <div class="product-details">
+                                        <p>Name: ${product.name}</p>
+                                        <p>Product ID: ${product.product_id}</p>
+                                        <p>Quantity: ${currentProduct.quantity}</p>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            return ''; // Handle if product is not found
+                        }
+                    }).join('')}
+                </div>
+            </div>
+        `;
+
+        // Append each order's HTML to the container
+        orderModal.innerHTML += orderHTML;
+    });
+
     });
 
     document.getElementById('profile').addEventListener('click', function () {
-        console.log("Profile");
         document.getElementById('profileModal').style.display = 'block';
-
-        // Implement Profile functionality
-        // Example: window.location.href = 'profile_page';
     });
 
     // -------------User Profile Section--------------- //
-
-
-
-
 });

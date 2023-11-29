@@ -374,4 +374,16 @@ nav a:hover {
             font-weight: bold;
         }
 
+        /*View Product*/
+
+        .view-product-div{
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+        }
+        .view-product-details{
+            font-size: 18px;
+            margin-top:2%;
+        }
+
 

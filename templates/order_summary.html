@@ -87,10 +87,37 @@
       cursor: pointer;
       font-size: 16px;
     }
-
     .return-to-home:hover {
       background-color: #0056b3;
     }
+    #orders-list{
+      height: 24rem;
+      overflow-y: auto;
+    }
+
+    /* scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(255, 255, 255, 0.3);
+}
+
   </style>
 </head>
 <body>
@@ -100,23 +127,7 @@
     <p>Your order has been successfully placed. Thank you for shopping with us!</p>
 
     <h3>Order Details:</h3>
-    <ul class="product-list">
-      <li class="product-item">
-        <img src="product1.jpg" alt="Product 1" class="product-image">
-        <div class="product-details">
-          <p class="product-name">Product 1</p>
-          <p class="product-price">$19.99</p>
-        </div>
-      </li>
-      <li class="product-item">
-        <img src="product2.jpg" alt="Product 2" class="product-image">
-        <div class="product-details">
-          <p class="product-name">Product 2</p>
-          <p class="product-price">$24.99</p>
-        </div>
-      </li>
-      <!-- Add more products as needed -->
-    </ul>
+    <div id = "orders-list"></div>
 
     <div class="colorful-element"></div>
 
@@ -124,10 +135,41 @@
   </div>
 
   <script>
+    let orderProducts = JSON.parse(localStorage.getItem('cart')) || [];
+    console.log(orderProducts);
+    console.log(orderProducts.length);
+
+    const ordersData = document.getElementById("orders-list");
+
+    for (let i = 0; i < orderProducts.length; i++) {
+      const ul = document.createElement('ul');
+      ul.innerHTML = `
+       <li class="product-item">
+        <img src=${orderProducts[i].image_url} alt="Product 1" class="product-image">
+        <div class="product-details">
+          <p class="product-name">${orderProducts[i].name}</p>
+          <p class="product-price">${orderProducts[i].cost}</p>
+        </div>
+      </li>
+        `;
+      ordersData.appendChild(ul);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     function returnToHome() {
-      // You can replace this with the actual URL of your home page
       window.location.href = "login";
     }
+
   </script>
 </body>
 </html>
