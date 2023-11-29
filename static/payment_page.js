@@ -1,11 +1,15 @@
 // Getting cart details from local storage and setting up payload.
 
 let cartDetails = localStorage.getItem('cart');
+let cData = JSON.parse(localStorage.getItem('cData'));
 let payload = {
-  "customer_id": "655a4e300d5cfaf04a8daca5",
+  "customer_id": "",
   "products": [],
   "total_cost": 0
 };
+if (cData && cData !== 'undefined') {
+  payload.customer_id = cData.id;
+}
 
 if (cartDetails && cartDetails !== 'undefined') {
   cartDetails = JSON.parse(cartDetails);
@@ -35,20 +39,20 @@ var payButton = document.getElementById('payment-button');
 payButton.onclick = proceedPayment;
 
     function proceedPayment() {
-        const cardNumber = document.getElementById('card-number').value;
-    // if (!isValidCardNumber(cardNumber)) {
-    //     // alert('Invalid card number');
-    //     return;
-    // }
-    //
-    // // Validate card holder
+        // const cardNumber = document.getElementById('card-number').value;
+        // if (!isValidCardNumber(cardNumber)) {
+        //     // alert('Invalid card number');
+        //     return;
+        // }
+
+    // Validate card holder
     // const cardHolder = document.getElementById('card-holder').value;
     // if (!isValidCardHolder(cardHolder)) {
     //     // alert('Invalid card holder name');
     //     return;
     // }
-    //
-    // // Validate expiry date
+
+    // Validate expiry date
     // const expiryDate = document.getElementById('expiry').value;
     // if (!isValidExpiryDate(expiryDate)) {
     //     // alert('Invalid expiry date');
@@ -78,7 +82,7 @@ payButton.onclick = proceedPayment;
 //     const cardNumberRegex = /^\d{16}$/;
 //     return cardNumberRegex.test(cardNumber);
 // }
-//
+
 // function isValidCardHolder(cardHolder) {
 //     // Check if the card holder name contains only letters and spaces
 //     const cardHolderRegex = /^[A-Za-z\s]+$/;
