@@ -80,7 +80,8 @@ def add_product():
 
 @product_endpoints.route("/get_product_page/<customerid>", methods=['GET'])
 def go_to_home(customerid):
-    get_product_page(customerid)
+    print("customer id  is "+customerid)
+    return get_product_page(str(customerid))
 
 # @product_endpoints.route("/add_product_old", methods=['POST'])
 # def add_product():

@@ -50,6 +50,7 @@ def customer_to_dict(customer):
 
 def get_product_page(customerid):
     customer = Customer.objects(id=customerid).first()
+    print(customer.username)
     customer_data = customer_to_dict(customer)
     products = Product.objects()
     order_ids = customer.order_history
