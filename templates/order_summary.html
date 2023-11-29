@@ -155,19 +155,29 @@
       ordersData.appendChild(ul);
     }
 
-
-
-
-
-
-
-
-
-
-
-
     function returnToHome() {
-      window.location.href = "login";
+
+
+      const url = 'http://localhost:5000/get_product_page/655a4e300d5cfaf04a8daca5';
+          getData(url)
+            .then(responseData => {
+              console.log('Success:', responseData);
+                // window.location.href = "login";
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+    }
+
+    function getData(url = '') {
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+
+      })
+        .then(response => response.json());
     }
 
   </script>

@@ -35,6 +35,32 @@ var payButton = document.getElementById('payment-button');
 payButton.onclick = proceedPayment;
 
     function proceedPayment() {
+        const cardNumber = document.getElementById('card-number').value;
+    // if (!isValidCardNumber(cardNumber)) {
+    //     // alert('Invalid card number');
+    //     return;
+    // }
+    //
+    // // Validate card holder
+    // const cardHolder = document.getElementById('card-holder').value;
+    // if (!isValidCardHolder(cardHolder)) {
+    //     // alert('Invalid card holder name');
+    //     return;
+    // }
+    //
+    // // Validate expiry date
+    // const expiryDate = document.getElementById('expiry').value;
+    // if (!isValidExpiryDate(expiryDate)) {
+    //     // alert('Invalid expiry date');
+    //     return;
+    // }
+    //
+    // // Validate CVV
+    // const cvv = document.getElementById('cvv').value;
+    // if (!isValidCVV(cvv)) {
+    //     // alert('Invalid CVV');
+    //     return;
+    // }
           const url = 'http://localhost:5000/add_order';
           postData(url, payload)
             .then(responseData => {
@@ -45,6 +71,32 @@ payButton.onclick = proceedPayment;
               console.error('Error:', error);
             });
     }
+
+// // Validation functions
+// function isValidCardNumber(cardNumber) {
+//     // Check if the card number is a 16-digit numeric value
+//     const cardNumberRegex = /^\d{16}$/;
+//     return cardNumberRegex.test(cardNumber);
+// }
+//
+// function isValidCardHolder(cardHolder) {
+//     // Check if the card holder name contains only letters and spaces
+//     const cardHolderRegex = /^[A-Za-z\s]+$/;
+//     return cardHolderRegex.test(cardHolder);
+// }
+//
+// function isValidExpiryDate(expiryDate) {
+//     // Check if the expiry date is in MM/YY format
+//     const expiryDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+//     return expiryDateRegex.test(expiryDate);
+// }
+//
+// function isValidCVV(cvv) {
+//     // Check if the CVV is a 3-digit numeric value
+//     const cvvRegex = /^\d{3}$/;
+//     return cvvRegex.test(cvv);
+// }
+
 
 // Post call to db -- These calls should be moved to service.js
 function postData(url = '', data = {}) {

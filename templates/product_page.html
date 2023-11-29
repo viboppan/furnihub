@@ -104,6 +104,11 @@
         orders = {{ orders|tojson|safe }};
         ordersData = {{ orders|tojson|safe }};
 
+        var customer = {};
+        customerData = {{customer | safe}};
+        console.log(customerData);
+        localStorage.setItem('cData',JSON.stringify(customerData));
+
         function closeProfileModal() {
             document.getElementById('profileModal').style.display = 'none';
         }
