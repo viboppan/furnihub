@@ -21,7 +21,9 @@ for (let i = 0; i < cartProducts.length; i++) {
         </div>
         <div class='pl-md-0 pl-1'><b>${cartProducts[i].cost}</b></div>
         <div class='pl-md-0 pl-2'>
-            <span class='fa fa-minus-square text-secondary'></span><span class='px-md-3 px-1'>1</span><span class='fa fa-plus-square text-secondary'></span>
+<!--            <span class='fa fa-minus-square text-secondary'></span>-->
+            <span class='px-md-3 px-1'>1</span>
+<!--            <span class='fa fa-plus-square text-secondary'></span>-->
         </div>
         <div class='pl-md-0 pl-1'><b>${cartProducts[i].cost}</b></div>
         <div class='close' id='close-product' onclick='deleteProduct("${cartProducts[i].name}")'>&times;</div>
