@@ -103,7 +103,7 @@ def cancel_order(order_id):
 
             # Convert the order object to a dictionary for JSON serialization
             order_data = order_dict = order_to_dict(order)
-            return jsonify(order_data), 200
+            return render_template('seller.html', ordered_products=get_orders_for_seller(product.seller_id))
         else:
             return jsonify({"error": f"Order with ID {order_id} not found"}), 404
 
@@ -115,6 +115,7 @@ def dispatch_order(order_id):
     try:
         # Retrieve the order based on the order ID
         order = Order.objects(id=str(order_id)).first()
+        seller_id = request.form.get('seller_id')
         if order:
             if order.order_status == "cancelled":
                 return jsonify({"error": f"Order with ID {order_id} already cancelled"}), 400
@@ -123,7 +124,7 @@ def dispatch_order(order_id):
 
             # Convert the order object to a dictionary for JSON serialization
             order_data = order_dict = order_to_dict(order)
-            return jsonify(order_data), 200
+            return render_template('seller.html', ordered_products=get_orders_for_seller(seller_id))
         else:
             return jsonify({"error": f"Order with ID {order_id} not found"}), 404
 
