@@ -67,6 +67,40 @@ def get_order(order_id):
 
         if order:
             # Convert the order object to a dictionary for JSON serialization
+            order_data = order_dict = orderedprods_to_dict(order)
+            return jsonify(order_data), 200
+        else:
+            return jsonify({"error": f"Order with ID {order_id} not found"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@order_endpoints.route("/cancel_order/<order_id>", methods=['GET'])
+def cancel_order(order_id):
+    try:
+        # Retrieve the order based on the order ID
+        order = Order.objects(id=str(order_id)).first()
+        if order:
+            if order.order_status == "cancelled":
+                return jsonify({"error": f"Order with ID {order_id} already cancelled"}), 400
+
+            # Iterate through products in the order
+            for product_info in order.products:
+                product_id = product_info.product_id.id
+                quantity = product_info.quantity
+
+                # Retrieve the product based on the product ID
+                product = Product.objects(id=product_id).first()
+
+                if product:
+                    # Increase the available quantity for the product
+                    product.available_quantity += quantity
+                    product.save()
+
+            order.order_status = "cancelled"
+            order.save()
+
+            # Convert the order object to a dictionary for JSON serialization
             order_data = order_dict = order_to_dict(order)
             return jsonify(order_data), 200
         else:
@@ -89,7 +123,7 @@ def get_orders_for_seller(seller_id):
         orders = Order.objects(products__product_id__in=product_ids, order_status="processing")
         print(orders)
         # Convert orders to a list of dictionaries for JSON serialization
-        orders_data = [order_to_dict(order,seller_products) for order in orders]
+        orders_data = [orderedprods_to_dict(order, seller_products) for order in orders]
 
         return orders_data
 
@@ -116,7 +150,7 @@ def order_to_dict(order):
     }
     return order_dict
 
-def order_to_dict(order, product_objects):
+def orderedprods_to_dict(order, product_objects):
     products_list = []
     for product_bought in order.products:
         # Find the product object in product_objects list based on product ID
