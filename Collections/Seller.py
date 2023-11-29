@@ -42,7 +42,6 @@ def add_user():
             seller_name=seller_name,
             email=email,
             contact_number=contact_number,
-            brand=brand,
             products=[]
         )
         new_seller.save()

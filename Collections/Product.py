@@ -1,9 +1,11 @@
+import os
+from pathlib import Path
+
 from flask import Blueprint, request, jsonify, render_template
 
 from Collections.Customer import get_product_page
 from Collections.Seller import get_products
 from utils.MongoDBUtils import Product
-import os
 
 # APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 # print(APP_ROOT)
@@ -34,17 +36,17 @@ def add_product():
         description = product_data.get('description')
         available_quantity = product_data.get('available_quantity')
         print("79")
-        os.chdir("..")
-        APP_ROOT = os.getcwd()
         if image_file:
             # Create the target folder if it doesn't exist
-            target_folder = os.path.join(APP_ROOT, '\\static\\images', category)
+            parent_folder_path = str(Path(os.path.dirname(__file__)).parents[0])
+            target_folder = parent_folder_path + '\\static\\images\\' + category
             os.makedirs(target_folder, exist_ok=True)
             print("85")
 
             # Save the image to the target folder
             image_path = os.path.join(target_folder, image_file.filename)
             image_file.save(image_path)
+            ui_image_path = '..' + image_path[len(parent_folder_path):].replace('\\', '/')
             print("90")
 
             # Create a new Product instance
@@ -58,7 +60,7 @@ def add_product():
                 weight=weight,
                 seller_id=seller_id,
                 rating=rating,
-                image_url=image_path,
+                image_url=ui_image_path,
                 category=category,
                 description=description,
                 # Convert "available_quantity" to an integer

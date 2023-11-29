@@ -44,7 +44,7 @@ def add_order():
             total_cost=total_cost,
         )
         order.save()
-
+        print(order)
         # Update the customer's order history
         customer = Customer.objects(id=order.customer_id).first()
         if customer:
