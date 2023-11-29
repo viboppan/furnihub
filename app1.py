@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from flask_cors import CORS
-from Collections.Customer import customer_endpoints
+from Collections.Customer import customer_endpoints, get_product_page
 from Collections.Order import order_endpoints
 from Collections.Payment import payment_endpoints
 from Collections.Product import product_endpoints
@@ -39,6 +39,14 @@ def payment_page():  # put application's code here
 def order_summary_page():  # put application's code here
     return render_template("order_summary.html")
 
+
+@app1.route('/customer/product_page/<customerid>')
+def product_pages(customerid):
+    return get_product_page(customerid)
+
+@app1.route('/seller')
+def seller_login():  # put application's code here
+    return render_template("seller_login.html")
 
 if __name__ == '__main__':
     print("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
