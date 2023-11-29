@@ -2,7 +2,7 @@ from flask import request, Blueprint, render_template, session, redirect, url_fo
 from mongoengine import *
 
 from utils.MongoDBUtils import Order, Customer
-from utils.mongo_setup import Product
+from utils.MongoDBUtils import Product
 
 customer_endpoints = Blueprint('customer_endpoints', __name__,
                                template_folder='templates')
@@ -41,7 +41,7 @@ def to_dict(self):
 
 def customer_to_dict(customer):
     return {
-        'id': customer.id,
+        'id': str(customer.id),
         'username': customer.username,
         'email': customer.email,
         'mobile_number' : customer.mobile_number
@@ -107,6 +107,7 @@ def order_to_dict(order):
         products_list.append(product_dict)
 
     order_dict = {
+        'order_id': str(order.id),
         'customer_id': str(order.customer_id),
         'products': products_list,
         'order_date': order.order_date.strftime('%Y-%m-%d %H:%M:%S'),
