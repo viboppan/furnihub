@@ -3,31 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product</title>
+    <title>Seller Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Add your CSS stylesheets here -->
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+            margin-bottom: 20px;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .col-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .col-6 {
+            width: 48%;
+            margin-bottom: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         form {
-            max-width: 500px;
+            max-width: 100%;
             margin: auto;
         }
 
         label {
             display: block;
             margin-bottom: 8px;
+            font-weight: bold;
         }
 
         input,
         select,
         textarea {
-            width: 100%;
+            width: calc(100% - 16px);
             padding: 8px;
             margin-bottom: 16px;
             box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
         }
 
         button {
@@ -37,63 +79,165 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
         }
 
         button:hover {
             background-color: #45a049;
         }
+
+        .popup-message {
+            display: none;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .large-text-container {
+            width: 100%;
+            text-align: right;
+            position: absolute; /* Changed */
+            top: 0; /* Changed */
+            right: 0; /* Changed */
+            padding: 20px; /* Added */
+        }
+
+        .large-text {
+            font-size: 36px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <div class="col-6">
-        <h2>Add Product</h2>
-    <form action="/add_product" method="post" id="productForm" enctype="multipart/form-data">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-
-        <label for="cost">Cost:</label>
-        <input type="number" id="cost" name="cost" step="0.01" required>
-
-        <label for="dimensions">Dimensions:</label>
-        <input type="text" id="dimensions" name="dimensions" placeholder="e.g., 10.0, 5.0, 2.5" required>
-
-        <label for="color">Color:</label>
-        <input type="text" id="color" name="color" required>
-
-        <label for="brand">Brand:</label>
-        <input type="text" id="brand" name="brand" required>
-
-        <label for="material_type">Material Type:</label>
-        <input type="text" id="material_type" name="material_type" required>
-
-        <label for="weight">Weight:</label>
-        <input type="number" id="weight" name="weight" step="0.01" required>
-
-        <label for="seller_id">Seller ID:</label>
-        <input type="text" id="seller_id" name="seller_id" value="656405034ea6f6951b8deb59" readonly>
-
-        <label for="rating">Rating:</label>
-        <input type="number" id="rating" name="rating" step="0.1">
-
-        <label for="image">Select Image: </label>
-        <input type="file" id="image" name="image" accept="image/*">
-
-        <label for="category">Category:</label>
-        <input type="text" id="category" name="category">
-
-        <label for="description">Description:</label>
-        <textarea id="description" name="description"></textarea>
-
-        <label for="available_quantity">Available Quantity:</label>
-        <input type="number" id="available_quantity" name="available_quantity" required>
-
-        <button type="submit" id = "add-product" value="ADD PRODUCT">Add Product</button>
-    </form>
+<div class="container">
+    <div class="navbar">
+        <a onclick="toggleForm()">Add Product</a>
     </div>
-    <div class="col-6">
-        This div is for order requests
-    </div>
+<div id="popupMessage" class="popup-message"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-6">
+                <h2>Add Product</h2>
+                <form action="/add_product" method="post" id="productForm" enctype="multipart/form-data">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
 
+                    <label for="cost">Cost:</label>
+                    <input type="number" id="cost" name="cost" step="0.01" required>
+
+                    <label for="dimensions">Dimensions:</label>
+                    <input type="text" id="dimensions" name="dimensions" placeholder="e.g., 10.0, 5.0, 2.5" required>
+
+                    <label for="color">Color:</label>
+                    <input type="text" id="color" name="color" required>
+
+                    <label for="brand">Brand:</label>
+                    <input type="text" id="brand" name="brand" required>
+
+                    <label for="material_type">Material Type:</label>
+                    <input type="text" id="material_type" name="material_type" required>
+
+                    <label for="weight">Weight:</label>
+                    <input type="number" id="weight" name="weight" step="0.01" required>
+
+                    <label for="seller_id">Seller ID:</label>
+                    <input type="text" id="seller_id" name="seller_id" value="656405034ea6f6951b8deb59" readonly>
+
+                    <label for="rating">Rating:</label>
+                    <input type="number" id="rating" name="rating" step="0.1">
+
+                    <label for="image">Select Image: </label>
+                    <input type="file" id="image" name="image" accept="image/*">
+
+                    <label for="category">Category:</label>
+                    <input type="text" id="category" name="category">
+
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description"></textarea>
+
+                    <label for="available_quantity">Available Quantity:</label>
+                    <input type="number" id="available_quantity" name="available_quantity" required>
+
+                    <button type="submit" id="add-product" value="ADD PRODUCT">Add Product</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="product-details" id="productDetails">
+            console.log(ordered_products)
+                {% for product in ordered_products.products %}
+                    console.log(ordered_products)
+                        <div class="product-card">
+                            <img src="{{ product.image_url }}" alt="{{ product.name }}" class="order-image">
+                            <div class="product-details">
+                                <p>Name: {{ product.name }}</p>
+                                <p>Product ID: {{ product.product_id }}</p>
+                                <p>Quantity: {{ product.available_quantity }}</p>
+                                <!-- Add more details as needed -->
+                            </div>
+                        </div>
+                    <div class="button-container">
+                    <button onclick="dispatchProduct()">Dispatch</button>
+                    <button class="cancel" onclick="cancelDispatch()">Cancel</button>
+                </div>
+                    {% endfor %}
+                <h2>Product Details</h2>
+                <p>Name: Product Name</p>
+                <p>Cost: $20.00</p>
+                <p>Dimensions: 10.0 x 5.0 x 2.5</p>
+                <p>Color: Blue</p>
+                <!-- Add more details as needed -->
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        function toggleForm() {
+            var form = document.getElementById("productForm");
+            form.style.display = form.style.display === "none" ? "block" : "none";
+        }
+
+        // Example: Show pop-up message after form submission
+        document.getElementById("productForm").addEventListener("submit", function (event) {
+
+            // Your existing form submission logic goes here
+
+            // Show pop-up message
+            var popupMessage = document.getElementById("popupMessage");
+            popupMessage.innerText = "Product added successfully!";
+            popupMessage.style.display = "block";
+
+            // Hide pop-up message after 3 seconds (adjust as needed)
+            setTimeout(function () {
+                popupMessage.style.display = "none";
+            }, 3000);
+        });
+        function dispatchProduct() {
+            // Implement dispatch logic
+            alert("Product dispatched!");
+        }
+
+        function cancelDispatch() {
+            // Implement cancel dispatch logic
+            alert("Dispatch canceled!");
+        }
+    </script>
+    <!-- Link to Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>
