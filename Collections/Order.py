@@ -75,7 +75,7 @@ def get_order(order_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-# @order_endpoints.route("/get_orders_for_seller/<seller_id>", methods=['GET'])
+@order_endpoints.route("/get_orders_for_seller/<seller_id>", methods=['GET'])
 def get_orders_for_seller(seller_id):
     try:
         # Retrieve the products sold by the seller

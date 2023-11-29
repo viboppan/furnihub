@@ -173,22 +173,61 @@
         <div class="col-md-6">
             <div class="product-details" id="productDetails">
             console.log(ordered_products)
-                {% for product in ordered_products.products %}
-                    console.log(ordered_products)
-                        <div class="product-card">
-                            <img src="{{ product.image_url }}" alt="{{ product.name }}" class="order-image">
-                            <div class="product-details">
-                                <p>Name: {{ product.name }}</p>
-                                <p>Product ID: {{ product.product_id }}</p>
-                                <p>Quantity: {{ product.available_quantity }}</p>
-                                <!-- Add more details as needed -->
-                            </div>
-                        </div>
-                    <div class="button-container">
-                    <button onclick="dispatchProduct()">Dispatch</button>
-                    <button class="cancel" onclick="cancelDispatch()">Cancel</button>
-                </div>
-                    {% endfor %}
+                <script>
+        console.log(ordered_products);
+        var productDetailsContainer = document.getElementById("productDetails");
+
+        {% for order in ordered_products %}
+            {% for product in order.products %}
+                var productCard = document.createElement("div");
+                productCard.className = "product-card";
+
+                var productImage = document.createElement("img");
+                productImage.src = "{{ product.product.image_url }}";
+                productImage.alt = "{{ product.product.name }}";
+                productImage.className = "order-image";
+
+                var productDetails = document.createElement("div");
+                productDetails.className = "product-details";
+                productDetails.innerHTML = "<p>Name: {{ product.product.name }}</p>" +
+                                           "<p>Product ID: {{ product.product.product_id }}</p>" +
+                                           "<p>Quantity: {{ product.quantity }}</p>";
+
+                var buttonContainer = document.createElement("div");
+                buttonContainer.className = "button-container";
+                var dispatchButton = document.createElement("button");
+                dispatchButton.textContent = "Dispatch";
+                dispatchButton.addEventListener("click", function() {
+                    dispatchProduct();  // Implement dispatch logic
+                });
+                var cancelButton = document.createElement("button");
+                cancelButton.textContent = "Cancel";
+                cancelButton.className = "cancel";
+                cancelButton.addEventListener("click", function() {
+                    cancelDispatch();  // Implement cancel dispatch logic
+                });
+
+                buttonContainer.appendChild(dispatchButton);
+                buttonContainer.appendChild(cancelButton);
+
+                productCard.appendChild(productImage);
+                productCard.appendChild(productDetails);
+                productCard.appendChild(buttonContainer);
+
+                productDetailsContainer.appendChild(productCard);
+            {% endfor %}
+        {% endfor %}
+
+        function dispatchProduct() {
+            // Implement dispatch logic
+            alert("Product dispatched!");
+        }
+
+        function cancelDispatch() {
+            // Implement cancel dispatch logic
+            alert("Dispatch canceled!");
+        }
+    </script>
                 <h2>Product Details</h2>
                 <p>Name: Product Name</p>
                 <p>Cost: $20.00</p>
