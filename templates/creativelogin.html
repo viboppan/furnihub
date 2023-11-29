@@ -35,6 +35,7 @@
                 </form>
                 <p id="toggleLogin" class="toggle-link">Don't have an Account? <a href="#"> Sign Up!</a></p>
                 <p id="toggleSignup" class="toggle-link" style="display: none;">Already have an Account? <a href="#"> Login Now!</a></p>
+                <p id="toggleSeller" class="toggle-link" style="display: none;">Are you a seller <a href="#"> click here!</a></p>
             </div>
         </div>
 
@@ -66,6 +67,10 @@
             document.getElementById("signupForm").style.display = "block";
             document.getElementById("toggleSignup").style.display = "inline-block";
             document.getElementById("toggleLogin").style.display = "none";
+        });
+
+        document.getElementById("toggleSeller").addEventListener("click", function() {
+            window.location.href='/seller';
         });
 
         document.getElementById("login-button").addEventListener("click", function() {

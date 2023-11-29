@@ -110,7 +110,7 @@ def cancel_order(order_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-@order_endpoints.route("/dispatch_order/<order_id>", methods=['GET'])
+@order_endpoints.route("/dispatch_order/<order_id>", methods=['GET','POST'])
 def dispatch_order(order_id):
     try:
         # Retrieve the order based on the order ID
