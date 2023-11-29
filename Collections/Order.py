@@ -109,6 +109,26 @@ def cancel_order(order_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
+@order_endpoints.route("/dispatch_order/<order_id>", methods=['GET'])
+def dispatch_order(order_id):
+    try:
+        # Retrieve the order based on the order ID
+        order = Order.objects(id=str(order_id)).first()
+        if order:
+            if order.order_status == "cancelled":
+                return jsonify({"error": f"Order with ID {order_id} already cancelled"}), 400
+            order.order_status = "dispatched"
+            order.save()
+
+            # Convert the order object to a dictionary for JSON serialization
+            order_data = order_dict = order_to_dict(order)
+            return jsonify(order_data), 200
+        else:
+            return jsonify({"error": f"Order with ID {order_id} not found"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
 @order_endpoints.route("/get_orders_for_seller/<seller_id>", methods=['GET'])
 def get_orders_for_seller(seller_id):
     try:
