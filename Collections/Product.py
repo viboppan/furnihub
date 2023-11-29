@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify, render_template
 
 from Collections.Customer import get_product_page
+from Collections.Seller import get_products
 from utils.MongoDBUtils import Product
 import os
 
@@ -68,7 +69,7 @@ def add_product():
             print(new_product.to_json())
             new_product.save()
 
-            return render_template('seller.html', isProductAdded=True)
+            return render_template('seller.html', isProductAdded=True, products=get_products())
         else:
             return jsonify({"error": "No image provided"}), 400
     except Exception as e:

@@ -1,7 +1,7 @@
 from flask import request, Blueprint, render_template, session, redirect, url_for, jsonify, json
 from mongoengine import *
 from mongoengine.base.common import get_document
-from utils.MongoDBUtils import Customer, Order, ProductBought
+from utils.MongoDBUtils import Customer, Order, ProductBought, Product
 
 order_endpoints = Blueprint('order_endpoints', __name__,
                             template_folder='templates')
@@ -79,18 +79,19 @@ def get_order(order_id):
 def get_orders_for_seller(seller_id):
     try:
         # Retrieve the products sold by the seller
-        seller_products = Product.objects(seller_email=seller_id).only('id')
-
+        print(seller_id+" here")
+        seller_products = Product.objects(seller_id=seller_id)
+        print(seller_products)
         # Extract product IDs
         product_ids = [str(product.id) for product in seller_products]
-
+        print((product_ids))
         # Retrieve orders containing the seller's products
-        orders = Order.objects(products__product_id__in=product_ids)
-
+        orders = Order.objects(products__product_id__in=product_ids, order_status="processing")
+        print(orders)
         # Convert orders to a list of dictionaries for JSON serialization
-        orders_data = [order_to_dict(order) for order in orders]
+        orders_data = [order_to_dict(order,seller_products) for order in orders]
 
-        return jsonify(orders_data), 200
+        return orders_data
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
@@ -98,6 +99,7 @@ def get_orders_for_seller(seller_id):
 def order_to_dict(order):
     products_list = []
     for product_bought in order.products:
+
         product_dict = {
             'product_id': str(product_bought.product_id.id),
             'quantity': product_bought.quantity
@@ -105,6 +107,45 @@ def order_to_dict(order):
         products_list.append(product_dict)
 
     order_dict = {
+        'id': str(order.id),
+        'customer_id': str(order.customer_id),
+        'products': products_list,
+        'order_date': order.order_date.strftime('%Y-%m-%d %H:%M:%S'),
+        'total_cost': order.total_cost,
+        'order_status': order.order_status
+    }
+    return order_dict
+
+def order_to_dict(order, product_objects):
+    products_list = []
+    for product_bought in order.products:
+        # Find the product object in product_objects list based on product ID
+        product_object = next((prod for prod in product_objects if str(prod.id) == str(product_bought.product_id.id)), None)
+
+        if product_object:
+            product_dict = {
+                'product': {
+                    'id': str(product_object.id),
+                    'name': product_object.name,
+                    'cost': product_object.cost,
+                    'dimensions': product_object.dimensions,
+                    'color': product_object.color,
+                    'brand': product_object.brand,
+                    'material_type': product_object.material_type,
+                    'weight': product_object.weight,
+                    'seller_id': product_object.seller_id,
+                    'rating': product_object.rating,
+                    'image_url': product_object.image_url,
+                    'category': product_object.category,
+                    'description': product_object.description,
+                    'available_quantity': product_object.available_quantity
+                },
+                'quantity': product_bought.quantity
+            }
+            products_list.append(product_dict)
+
+    order_dict = {
+        'order_id': str(order.id),
         'customer_id': str(order.customer_id),
         'products': products_list,
         'order_date': order.order_date.strftime('%Y-%m-%d %H:%M:%S'),
