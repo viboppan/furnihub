@@ -44,6 +44,7 @@ def add_order():
             total_cost=total_cost,
         )
         order.save()
+        generated_id = str(payment.id)
         print(order)
         # Update the customer's order history
         customer = Customer.objects(id=order.customer_id).first()
@@ -51,7 +52,7 @@ def add_order():
             customer.order_history.append(order.id)
             customer.save()
 
-            return jsonify({"message": "Order added successfully!"}), 201
+            return jsonify({"message": "Order added successfully!", "order_id": generated_id}), 201
         else:
             return jsonify({"error": "Customer not found"}), 404
 
