@@ -44,7 +44,7 @@ def add_order():
             total_cost=total_cost,
         )
         order.save()
-        generated_id = str(payment.id)
+        generated_id = str(order.id)
         print(order)
         # Update the customer's order history
         customer = Customer.objects(id=order.customer_id).first()
