@@ -380,6 +380,7 @@ nav a:hover {
             display: flex;
             flex-wrap: nowrap;
             justify-content: space-between;
+            width:65%;
         }
         .view-product-details{
             font-size: 18px;

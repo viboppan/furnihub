@@ -160,7 +160,8 @@
         let customer_id = '';
         if (cData && cData !== 'undefined') {
             customer_id = cData.id;
-            localStorage.setItem('cart','[]');
+            let cartString = JSON.stringify([]);
+            localStorage.setItem('cart',cartString);
             window.location.href=`/get_product_page/${customer_id}`;
         }
     }

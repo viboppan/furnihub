@@ -182,9 +182,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Go To Cart
     document.getElementById('go-to-cart-button').addEventListener('click', function() {
-        let cartString = JSON.stringify(cart);
-        localStorage.setItem('cart', cartString);
-        window.location.href = `cart_page`;
+        if(cart.length > 0) {
+            let cartString = JSON.stringify(cart);
+            localStorage.setItem('cart', cartString);
+            window.location.href = `/customer/cart_page`;
+        }
     });
 
 

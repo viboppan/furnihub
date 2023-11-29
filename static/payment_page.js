@@ -5,6 +5,14 @@ let payload = {
     "products": [],
     "total_cost": 0
 };
+let cardPayload = {
+    "order_id": "",
+    "payment_date": "",
+    "payment_method": "",
+    "amount": 0,
+    "status":""
+};
+
 if (cData && cData !== 'undefined') {
     payload.customer_id = cData.id;
 }
@@ -66,15 +74,16 @@ function proceedPayment(e) {
             console.error('Error:', error);
         });
 
-    // const url1 = 'http://localhost:5000/add_payment';
-    // postData(url, payload)
-    //     .then(responseData => {
-    //         console.log('Success:', responseData);
-    //         window.location.href = `order_summary`;
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
+    const url1 = 'http://localhost:5000/add_payment';
+
+    postData(url1, cardPayload)
+        .then(responseData => {
+            console.log('Success:', responseData);
+            window.location.href = `order_summary`;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 // Validation functions
