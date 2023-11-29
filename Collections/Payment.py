@@ -16,7 +16,7 @@ def add_payment():
         payment_date = payment_data.get('payment_date')
         payment_method = payment_data.get('payment_method')
         amount = payment_data.get('amount')
-        status = payment_data.get('status')
+        status = "success"
         order_id = payment_data.get('order_id')
         existing_order = Order.objects(id=order_id).first()
         if not existing_order:

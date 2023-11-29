@@ -15,39 +15,29 @@
 <body>
     <!-- main -->
     <div class="main-w3layouts wrapper">
-        <h1>Creative SignUp Form</h1>
+        <h1>Customer Login Form</h1>
         <div class="main-agileinfo">
             <div class="agileits-top">
-                <form action="customer/add" method="post" id="signupForm">
+                <form action="customer/login" method="post" id="loginForm">
+                    <input class="text" type="text" name="username" placeholder="Username" required=""><br>
+                    <input class="text" type="password" name="password" placeholder="Password" required="">
+                    <input type="submit" id = "login-button" value="LOGIN">
+
+                </form>
+                <form action="customer/add" method="post" id="signupForm" style="display: none;">
                     <input class="text" type="text" name="username" placeholder="Username" required="">
                     <input class="text email" type="email" name="email" placeholder="Email" required="">
                     <input class="text" type="password" name="password" placeholder="Password" required="">
                     <input class="text w3lpass" type="password" name="password1" placeholder="Confirm Password" required="">
                     <input class="text" type="text" name="phone" placeholder="Phone" required="">
                     <input class="text" type="text" name="address" placeholder="Address" required="">
-                    <div class="wthree-text">
-                        <label class="anim">
-                            <input type="checkbox" class="checkbox" required="">
-                            <span>I Agree To The Terms & Conditions</span>
-                        </label>
-                        <div class="clear"> </div>
-                    </div>
                     <input type="submit" value="SIGNUP">
                 </form>
-                <form action="customer/login" method="post" id="loginForm" style="display: none;">
-                    <input class="text" type="text" name="username" placeholder="Username" required=""><br>
-                    <input class="text" type="password" name="password" placeholder="Password" required="">
-                    <input type="submit" id = "login-button" value="LOGIN">
-
-                </form>
-                <p id="toggleSignup" class="toggle-link">Don't have an Account? <a href="#"> Login Now!</a></p>
-                <p id="toggleLogin" class="toggle-link" style="display: none;">Already have an Account? <a href="#"> Sign Up!</a></p>
+                <p id="toggleLogin" class="toggle-link">Don't have an Account? <a href="#"> Sign Up!</a></p>
+                <p id="toggleSignup" class="toggle-link" style="display: none;">Already have an Account? <a href="#"> Login Now!</a></p>
             </div>
         </div>
-        <!-- copyright -->
-        <div class="colorlibcopy-agile">
-            <p>© 2018 Colorlib Signup Form. All rights reserved | Design by <a href="https://colorlib.com/" target="_blank">Colorlib</a></p>
-        </div>
+
         <!-- //copyright -->
         <ul class="colorlib-bubbles">
             <li></li>

@@ -6,6 +6,10 @@
     <title>Seller Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Add your CSS stylesheets here -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -117,11 +121,11 @@
     </style>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
     <div class="navbar">
         <a onclick="toggleForm()">Add Product</a>
     </div>
-<div id="popupMessage" class="popup-message"></div>
+    <div id="popupMessage" class="popup-message"></div>
     <div class="row">
         <div class="col-md-6">
             <div class="col-6">
@@ -172,111 +176,84 @@
         </div>
         <div class="col-md-6">
             <div class="product-details" id="productDetails">
-            console.log(ordered_products)
-                <script>
-        console.log(ordered_products);
-        var productDetailsContainer = document.getElementById("productDetails");
-
-        {% for order in ordered_products %}
-            {% for product in order.products %}
-                var productCard = document.createElement("div");
-                productCard.className = "product-card";
-
-                var productImage = document.createElement("img");
-                productImage.src = "{{ product.product.image_url }}";
-                productImage.alt = "{{ product.product.name }}";
-                productImage.className = "order-image";
-
-                var productDetails = document.createElement("div");
-                productDetails.className = "product-details";
-                productDetails.innerHTML = "<p>Name: {{ product.product.name }}</p>" +
-                                           "<p>Product ID: {{ product.product.product_id }}</p>" +
-                                           "<p>Quantity: {{ product.quantity }}</p>";
-
-                var buttonContainer = document.createElement("div");
-                buttonContainer.className = "button-container";
-                var dispatchButton = document.createElement("button");
-                dispatchButton.textContent = "Dispatch";
-                dispatchButton.addEventListener("click", function() {
-                    dispatchProduct();  // Implement dispatch logic
-                });
-                var cancelButton = document.createElement("button");
-                cancelButton.textContent = "Cancel";
-                cancelButton.className = "cancel";
-                cancelButton.addEventListener("click", function() {
-                    cancelDispatch();  // Implement cancel dispatch logic
-                });
-
-                buttonContainer.appendChild(dispatchButton);
-                buttonContainer.appendChild(cancelButton);
-
-                productCard.appendChild(productImage);
-                productCard.appendChild(productDetails);
-                productCard.appendChild(buttonContainer);
-
-                productDetailsContainer.appendChild(productCard);
-            {% endfor %}
-        {% endfor %}
-
-        function dispatchProduct() {
-            // Implement dispatch logic
-            alert("Product dispatched!");
-        }
-
-        function cancelDispatch() {
-            // Implement cancel dispatch logic
-            alert("Dispatch canceled!");
-        }
-    </script>
-                <h2>Product Details</h2>
-                <p>Name: Product Name</p>
-                <p>Cost: $20.00</p>
-                <p>Dimensions: 10.0 x 5.0 x 2.5</p>
-                <p>Color: Blue</p>
-                <!-- Add more details as needed -->
-
-
+            <h1>Order requests</h1>
+                {% for order in ordered_products %}
+                    {% for product in order.products %}
+                        <hr>
+                        <div class="card">
+                            <div class="card-body container-fluid">
+                                <div class="row">
+                                    <p>
+                                    <div class="col-3">
+                                        <img class="order-image" width="150" height="150"
+                                             src="{{ product.product.image_url }}" alt="{{ product.product.name }}">
+                                    </div>
+                                    <div class="col-6">
+                                        <p>Name : {{ product.product.name }}</p>
+                                        <p>Product ID : {{ product.product.id }}</p>
+                                        <p>Quantity : {{ product.quantity }}</p>
+                                    </div>
+                                    <div class="col-3 d-grid text-center">
+                                        <div class="row">
+                                            <form action="/dispatch_order/{{ order.order_id }}" method="POST">
+                                                <input type="text" class="d-none" name="seller_id" value="{{ product.product.seller_id }}">
+                                                <button class="btn btn-success btn-lg" type="submit">Dispatch</button>
+                                            </form>
+                                        </div>
+                                        <div class="row">
+                                            <form action="/cancel_order/{{ order.order_id }}">
+                                                <button class="btn btn-danger btn-lg" type="submit">Cancel</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
             </div>
         </div>
     </div>
 </div>
 
 
-    <script>
-        function toggleForm() {
-            var form = document.getElementById("productForm");
-            form.style.display = form.style.display === "none" ? "block" : "none";
-        }
+<script>
+    function toggleForm() {
+        var form = document.getElementById("productForm");
+        form.style.display = form.style.display === "none" ? "block" : "none";
+    }
 
-        // Example: Show pop-up message after form submission
-        document.getElementById("productForm").addEventListener("submit", function (event) {
+    // Example: Show pop-up message after form submission
+    document.getElementById("productForm").addEventListener("submit", function (event) {
 
-            // Your existing form submission logic goes here
+        // Your existing form submission logic goes here
 
-            // Show pop-up message
-            var popupMessage = document.getElementById("popupMessage");
-            popupMessage.innerText = "Product added successfully!";
-            popupMessage.style.display = "block";
+        // Show pop-up message
+        var popupMessage = document.getElementById("popupMessage");
+        popupMessage.innerText = "Product added successfully!";
+        popupMessage.style.display = "block";
 
-            // Hide pop-up message after 3 seconds (adjust as needed)
-            setTimeout(function () {
-                popupMessage.style.display = "none";
-            }, 3000);
-        });
-        function dispatchProduct() {
-            // Implement dispatch logic
-            alert("Product dispatched!");
-        }
+        // Hide pop-up message after 3 seconds (adjust as needed)
+        setTimeout(function () {
+            popupMessage.style.display = "none";
+        }, 3000);
+    });
 
-        function cancelDispatch() {
-            // Implement cancel dispatch logic
-            alert("Dispatch canceled!");
-        }
-    </script>
-    <!-- Link to Bootstrap JS and Popper.js -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    function dispatchProduct() {
+        // Implement dispatch logic
+        alert("Product dispatched!");
+    }
+
+    function cancelDispatch() {
+        // Implement cancel dispatch logic
+        alert("Dispatch canceled!");
+    }
+</script>
+<!-- Link to Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>
