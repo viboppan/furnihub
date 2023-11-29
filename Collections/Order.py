@@ -107,7 +107,7 @@ def order_to_dict(order):
         products_list.append(product_dict)
 
     order_dict = {
-        'id': str(order.id),
+        'order_id': str(order.id),
         'customer_id': str(order.customer_id),
         'products': products_list,
         'order_date': order.order_date.strftime('%Y-%m-%d %H:%M:%S'),
