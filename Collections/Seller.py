@@ -41,15 +41,15 @@ def add_user():
         if seller:
             return "email already taken"
         contact_number = request.form.get('contact_number')
-        brand = "ikea"
-        product_ids = request.form.get('products', [])
         print("hellooooooooooooooooooooooooooooooo")
         # Create a new seller
         new_seller = Seller(
+            first_name=request.form.get('first_name'),
+            last_name=request.form.get('last_name'),
             seller_name=seller_name,
             email=email,
-            contact_number=contact_number,
-            products=[]
+            password=password,
+            mobile_number=contact_number
         )
         new_seller.save()
         return render_template('seller.html', ordered_products=get_orders_for_seller(new_seller.id))

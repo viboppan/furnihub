@@ -20,14 +20,15 @@ def add_user():
         customer = Customer.objects(email=email).first()
         if customer:
             return "email already taken"
-        customer = Customer(username=username,
+        customer = Customer(first_name=request.form.get('first_name'),
+                            last_name=request.form.get('last_name'),
+                            username=username,
                             email=email,
                             password=request.form.get('password'),
                             mobile_number=request.form.get('phone'),
                             address=request.form.get('address'))
         customer.save()
         return redirect("/")
-        # return render_template('creativelogin.html', reload_flag=True)
     else:
         print('')
 

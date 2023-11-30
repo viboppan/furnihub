@@ -8,25 +8,6 @@ import random
 
 fake = Faker()
 
-
-# Define MongoDB model
-class Product(Document):
-    product_id = ObjectIdField(default=ObjectId, primary_key=True)
-    name = StringField()
-    cost = FloatField()
-    dimensions = ListField(FloatField())
-    color = StringField()
-    brand = StringField()
-    material_type = StringField()
-    weight = FloatField()
-    seller_id = StringField()
-    rating = FloatField()
-    image_url = StringField()
-    category = StringField()
-    description = StringField()
-    available_quantity = IntField()
-
-
 # MongoDB Connection
 connect(host="mongodb://localhost:27017/furnihub")
 
@@ -43,6 +24,13 @@ def insert_products_from_images(folder_path):
                 match = re.match(r'^[^\d.]+', image_file)
                 color_name = match.group() if match else "Unknown"
 
+                #create a seller
+                seller = Seller(
+                    seller_name="seller123",
+                    email="seller@gmail.com",
+                    password="12345",
+
+                )
                 # Create a new Product document with random data and detected color
                 product = Product(
                     name=f"{category_folder}{idx + 1}",

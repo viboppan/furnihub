@@ -11,6 +11,8 @@ class Admin(Document):
 
 
 class Customer(Document):
+    first_name = StringField()
+    last_name = StringField()
     username = StringField()
     email = EmailField()
     password = StringField()
@@ -37,11 +39,14 @@ class Product(Document):
 
 
 class Seller(Document):
+    first_name = StringField()
+    last_name = StringField()
     seller_name = StringField()
     password = StringField()
     email = EmailField()
-    contact_number = StringField()
-    products = ListField(field=ObjectIdField)
+    mobile_number = StringField()
+    address = StringField()
+    # products = ListField(field=ObjectIdField)
 
 
 class ProductBought(EmbeddedDocument):
