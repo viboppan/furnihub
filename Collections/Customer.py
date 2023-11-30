@@ -90,7 +90,7 @@ def login():
             # return render_template('homepage.html')
         else:
             error = "Invalid username or password. Please try again."
-            return error
+            return render_template('creativelogin.html', error=error)
 
     return render_template('creativelogin.html')
 
