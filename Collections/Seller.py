@@ -33,6 +33,7 @@ def add_user():
     if request.method == 'POST':
         seller_name = request.form.get('username')
         email = request.form.get('email')
+        password = request.form.get('password')
         seller = Seller.objects(seller_name=seller_name).first()
         if seller:
             return "username already taken"

@@ -18,6 +18,7 @@ def add_header(response):
     response.cache_control.no_store = True
     return response
 
+
 @app1.route('/')
 def hello_world():  # put application's code here
     return render_template("creativelogin.html")
@@ -37,6 +38,7 @@ def payment_page():  # put application's code here
 def order_summary_page():  # put application's code here
     return render_template("order_summary.html")
 
+
 @app1.route('/customer/failure_page')
 def failure_page():  # put application's code here
     return render_template("failure_page.html")
@@ -46,13 +48,16 @@ def failure_page():  # put application's code here
 def product_pages(customerid):
     return get_product_page(customerid)
 
+
 @app1.route('/seller')
 def seller_login():  # put application's code here
     return render_template("seller_login.html")
 
+
 @app1.route('/login')
 def customer():  # put application's code here
     return render_template("creativelogin.html")
+
 
 if __name__ == '__main__':
     print("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")

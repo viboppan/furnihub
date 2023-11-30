@@ -26,7 +26,8 @@ def add_user():
                             mobile_number=request.form.get('phone'),
                             address=request.form.get('address'))
         customer.save()
-        return render_template('homepage.html')
+        return redirect("/")
+        # return render_template('creativelogin.html', reload_flag=True)
     else:
         print('')
 
