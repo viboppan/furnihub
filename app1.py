@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from flask_cors import CORS
+# from flask_cors import CORS
 from Collections.Customer import customer_endpoints, get_product_page
 from Collections.Order import order_endpoints
 from Collections.Payment import payment_endpoints
@@ -7,7 +7,7 @@ from Collections.Product import product_endpoints
 from Collections.Seller import seller_endpoints
 
 app1 = Flask(__name__)
-CORS(app1)
+# CORS(app1)
 app1.register_blueprint(customer_endpoints)
 app1.register_blueprint(order_endpoints)
 app1.register_blueprint(payment_endpoints)
@@ -23,7 +23,7 @@ def add_header(response):
 @app1.route('/')
 def hello_world():  # put application's code here
     return render_template("creativelogin.html")
-
+    # return render_template("seller_login.html")
 
 @app1.route('/customer/cart_page')
 def cart_page():  # put application's code here
@@ -38,6 +38,10 @@ def payment_page():  # put application's code here
 @app1.route('/customer/order_summary')
 def order_summary_page():  # put application's code here
     return render_template("order_summary.html")
+
+@app1.route('/customer/failure_page')
+def failure_page():  # put application's code here
+    return render_template("failure_page.html")
 
 
 @app1.route('/customer/product_page/<customerid>')

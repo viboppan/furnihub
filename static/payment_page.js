@@ -79,19 +79,25 @@ function proceedPayment(e) {
                 console.log("CardPayload",cardPayload);
                 postData(url1, cardPayload)
                     .then(responseData => {
+                        if(responseData.payment_id != undefined) {
                             console.log('Success:', responseData);
                             window.location.href = `order_summary`;
+                        } else {
+                            window.location.href = `failure_page`;
+                        }
                     })
                     .catch(error => {
                         console.error('Error:', error);
+                        window.location.href = `failure_page`;
                     });
+            } else{
+               window.location.href = `failure_page`;
             }
         })
         .catch(error => {
             console.error('Error:', error);
+               window.location.href = `failure_page`;
         });
-
-
 }
 
 // Validation functions

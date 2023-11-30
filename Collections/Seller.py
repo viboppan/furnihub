@@ -67,7 +67,8 @@ def login():
             return render_template('seller.html', ordered_products=ordered_products1)
         else:
             error = "Invalid username or password. Please try again."
-            return error
+            return render_template('seller_login.html', error=error)
+
     # return render_template('seller.html')
 
     # Function to get orders for a given customer
