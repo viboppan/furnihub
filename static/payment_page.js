@@ -6,11 +6,10 @@ let payload = {
     "total_cost": 0
 };
 let cardPayload = {
-    "order_id": "",
     "payment_date": "",
     "payment_method": "",
     "amount": 0,
-    "status":""
+    "order_id":"",
 };
 
 if (cData && cData !== 'undefined') {
@@ -27,7 +26,8 @@ if (cartDetails && cartDetails !== 'undefined') {
         return info;
     });
 
-    payload.total_cost = cartDetails.reduce((sum, product) => sum + product.cost, 0);
+   const cartCost = cartDetails.reduce((sum, product) => sum + product.cost, 0);
+   payload.total_cost = cartCost;
 
     console.log(payload);
 
@@ -68,22 +68,30 @@ function proceedPayment(e) {
     postData(url, payload)
         .then(responseData => {
             console.log('Success:', responseData);
-            window.location.href = `order_summary`;
+            if(responseData.order_id !=undefined) {
+                // window.location.href = `order_summary`;
+                const url1 = 'http://localhost:5000/add_payment';
+                cardPayload.payment_date = new Date().toLocaleString();
+                cardPayload.payment_method = "card";
+                cardPayload.amount = cartDetails.reduce((sum, product) => sum + product.cost, 0);;
+                cardPayload.order_id = responseData.order_id;
+
+                console.log("CardPayload",cardPayload);
+                postData(url1, cardPayload)
+                    .then(responseData => {
+                            console.log('Success:', responseData);
+                            window.location.href = `order_summary`;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
         })
         .catch(error => {
             console.error('Error:', error);
         });
 
-    const url1 = 'http://localhost:5000/add_payment';
 
-    postData(url1, cardPayload)
-        .then(responseData => {
-            console.log('Success:', responseData);
-            window.location.href = `order_summary`;
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
 }
 
 // Validation functions
@@ -114,7 +122,6 @@ function postData(url = '', data = {}) {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             headers: {
                 'Content-Type': 'application/json',
-                // Add any other headers if needed
             },
             body: JSON.stringify(data), // body data type must match "Content-Type" header
         })
