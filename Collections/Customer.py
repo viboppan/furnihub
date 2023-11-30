@@ -12,8 +12,16 @@ connect(host="mongodb://localhost:27017/furnihub")
 @customer_endpoints.route("/customer/add", methods=['POST'])
 def add_user():
     if request.method == 'POST':
-        customer = Customer(username=request.form.get('username'),
-                            email=request.form.get('email'),
+        username = request.form.get('username')
+        email = request.form.get('email')
+        customer = Customer.objects(username=username).first()
+        if customer:
+            return "username already taken"
+        customer = Customer.objects(email=email).first()
+        if customer:
+            return "email already taken"
+        customer = Customer(username=username,
+                            email=email,
                             password=request.form.get('password'),
                             mobile_number=request.form.get('phone'),
                             address=request.form.get('address'))
