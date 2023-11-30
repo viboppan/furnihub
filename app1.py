@@ -1,5 +1,4 @@
 from flask import Flask, render_template
-from flask_cors import CORS
 from Collections.Customer import customer_endpoints, get_product_page
 from Collections.Order import order_endpoints
 from Collections.Payment import payment_endpoints
@@ -7,7 +6,6 @@ from Collections.Product import product_endpoints
 from Collections.Seller import seller_endpoints
 
 app1 = Flask(__name__)
-CORS(app1)
 app1.register_blueprint(customer_endpoints)
 app1.register_blueprint(order_endpoints)
 app1.register_blueprint(payment_endpoints)
