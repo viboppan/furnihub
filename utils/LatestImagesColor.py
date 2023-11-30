@@ -52,7 +52,7 @@ def insert_products_from_images(folder_path):
                     brand=fake.company(),
                     material_type="wood",
                     weight=round(random.uniform(1, 50),2),
-                    seller_id="6565322f1c2a67f983d91232",
+                    seller_id="6566d461d4371644c08c4232",
                     rating=round(random.uniform(1, 5),1),
                     image_url=image_path,  # Store local path as image_url
                     category=category_folder,

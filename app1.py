@@ -37,6 +37,10 @@ def payment_page():  # put application's code here
 def order_summary_page():  # put application's code here
     return render_template("order_summary.html")
 
+@app1.route('/customer/failure_page')
+def failure_page():  # put application's code here
+    return render_template("failure_page.html")
+
 
 @app1.route('/customer/product_page/<customerid>')
 def product_pages(customerid):

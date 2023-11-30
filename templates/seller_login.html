@@ -22,7 +22,9 @@
                     <input class="text" type="text" name="username" placeholder="Username" required=""><br>
                     <input class="text" type="password" name="password" placeholder="Password" required="">
                     <input type="submit" id = "login-button" value="LOGIN">
-
+                    {% if error %}
+                        <p style="color: red; margin-bottom:2%">{{ error }}</p>
+                    {% endif %}
                 </form>
                 <form action="seller/add" method="post" id="signupForm" style="display: none;">
                     <input class="text" type="text" name="username" placeholder="Username" required="">
