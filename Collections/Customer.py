@@ -54,7 +54,10 @@ def customer_to_dict(customer):
         'id': str(customer.id),
         'username': customer.username,
         'email': customer.email,
-        'mobile_number' : customer.mobile_number
+        'mobile_number' : customer.mobile_number,
+        'first_name' : customer.first_name,
+        'last_name' : customer.last_name,
+        'address' : customer.address
     }
 
 
