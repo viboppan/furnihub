@@ -153,17 +153,25 @@
                     <label for="weight">Weight:</label>
                     <input type="number" id="weight" name="weight" step="0.01" required>
 
-                    <label for="seller_id">Seller ID:</label>
-                    <input type="text" id="seller_id" name="seller_id" value="656405034ea6f6951b8deb59" readonly>
+                    <label for="seller_id" style="display: none;">Seller ID:</label>
+                    <input type="text" id="seller_id" name="seller_id" value="656405034ea6f6951b8deb59" readonly style="display: none;">
 
                     <label for="rating">Rating:</label>
-                    <input type="number" id="rating" name="rating" step="0.1">
+                    <input type="number" id="rating" name="rating" step="0.1" min="1" max="5">
 
                     <label for="image">Select Image: </label>
                     <input type="file" id="image" name="image" accept="image/*">
 
                     <label for="category">Category:</label>
-                    <input type="text" id="category" name="category">
+                    <select id="category" name="category">
+                        <option value="coffee_table">Coffee Table</option>
+                        <option value="dining_chair">Dining Chair</option>
+                        <option value="dining_set">Dining Set</option>
+                        <option value="office_chair">Office Chair</option>
+                        <option value="recliner">Recliner</option>
+                        <option value="shoe_cabinet">Shoe Cabinet</option>
+                        <option value="sofa">Sofa</option>
+                    </select>
 
                     <label for="description">Description:</label>
                     <textarea id="description" name="description"></textarea>
@@ -177,7 +185,7 @@
         </div>
         <div class="col-md-6">
             <div class="product-details" id="productDetails">
-            <h1>Order requests</h1>
+                <h1>Order requests</h1>
                 {% for order in ordered_products %}
                     {% for product in order.products %}
                         <hr>
@@ -198,7 +206,8 @@
                                     <div class="col-3 d-grid text-center">
                                         <div class="row">
                                             <form action="/dispatch_order/{{ order.order_id }}" method="POST">
-                                                <input type="text" class="d-none" name="seller_id" value="{{ product.product.seller_id }}">
+                                                <input type="text" class="d-none" name="seller_id"
+                                                       value="{{ product.product.seller_id }}">
                                                 <button class="btn btn-success btn-lg" type="submit">Dispatch</button>
                                             </form>
                                         </div>

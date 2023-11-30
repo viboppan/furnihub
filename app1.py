@@ -48,6 +48,10 @@ def product_pages(customerid):
 def seller_login():  # put application's code here
     return render_template("seller_login.html")
 
+@app1.route('/login')
+def customer():  # put application's code here
+    return render_template("creativelogin.html")
+
 if __name__ == '__main__':
     print("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
     # insert_sample_data()

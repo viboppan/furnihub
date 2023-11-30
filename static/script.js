@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="order-status">${order.order_status}</div>
                     </div>
                     <div>
-                        <button class="cancel-order-button" data-product-id="${order.products}" id="cancel-order">
+                        <button class="cancel-order-button" data-product-id="${order.products}" id="cancel-order" style="background-color: red; display: ${order.order_status.toLowerCase() === 'cancelled' ? 'none' : 'inline-block'};" >
                             Cancel Order
                         </button>
                     </div>
