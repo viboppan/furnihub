@@ -33,6 +33,12 @@ def add_user():
     if request.method == 'POST':
         seller_name = request.form.get('username')
         email = request.form.get('email')
+        seller = Seller.objects(seller_name=seller_name).first()
+        if seller:
+            return "username already taken"
+        seller = Seller.objects(email=email).first()
+        if seller:
+            return "email already taken"
         contact_number = request.form.get('contact_number')
         brand = "ikea"
         product_ids = request.form.get('products', [])
@@ -48,7 +54,7 @@ def add_user():
         return render_template('seller.html', ordered_products=get_orders_for_seller(new_seller.id))
 
     else:
-        return "hi"
+        return "method not allowed"
 
 
 @seller_endpoints.route('/seller/login', methods=['POST'])
