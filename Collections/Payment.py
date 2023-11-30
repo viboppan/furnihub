@@ -11,7 +11,7 @@ connect(host="mongodb://localhost:27017/furnihub")
 @payment_endpoints.route("/add_payment", methods=['POST'])
 def add_payment():
     try:
-        payment_data = request.form()
+        payment_data = request.json
         # Read fields from the JSON data
         payment_date = payment_data.get('payment_date')
         payment_method = payment_data.get('payment_method')
