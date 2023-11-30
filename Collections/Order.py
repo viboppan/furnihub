@@ -2,6 +2,7 @@ from flask import request, Blueprint, render_template, session, redirect, url_fo
 from mongoengine import *
 from mongoengine.base.common import get_document
 from utils.MongoDBUtils import Customer, Order, ProductBought, Product
+from Collections.Customer import get_product_page
 
 order_endpoints = Blueprint('order_endpoints', __name__,
                             template_folder='templates')
@@ -104,6 +105,42 @@ def cancel_order(order_id):
             # Convert the order object to a dictionary for JSON serialization
             order_data = order_dict = order_to_dict(order)
             return render_template('seller.html', ordered_products=get_orders_for_seller(product.seller_id))
+        else:
+            return jsonify({"error": f"Order with ID {order_id} not found"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@order_endpoints.route("/customer/cancel_order/", methods=['POST'])
+def cancel_order_by_customer(order_id):
+    try:
+        order_id=request.form.get('order_id')
+        customer_id=request.form.get('customer_id')
+        # Retrieve the order based on the order ID
+        order = Order.objects(id=str(order_id)).first()
+        if order:
+            if order.order_status == "cancelled":
+                return jsonify({"error": f"Order with ID {order_id} already cancelled"}), 400
+
+            # Iterate through products in the order
+            for product_info in order.products:
+                product_id = product_info.product_id.id
+                quantity = product_info.quantity
+
+                # Retrieve the product based on the product ID
+                product = Product.objects(id=product_id).first()
+
+                if product:
+                    # Increase the available quantity for the product
+                    product.available_quantity += quantity
+                    product.save()
+
+            order.order_status = "cancelled"
+            order.save()
+
+            # Convert the order object to a dictionary for JSON serialization
+            # order_data = order_dict = order_to_dict(order)
+            return get_product_page(customer_id)
         else:
             return jsonify({"error": f"Order with ID {order_id} not found"}), 404
 

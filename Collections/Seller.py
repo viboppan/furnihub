@@ -59,15 +59,15 @@ def login():
         print(username)
         # Check if the user exists
         seller = Seller.objects(seller_name=username).first()
-        # if seller and seller.password == password:
-        print(seller.id)
-        ordered_products1 = get_orders_for_seller(str(seller.id))
-        print("post order")
-        print(ordered_products1)
-        return render_template('seller.html', ordered_products=ordered_products1)
-    #     else:
-    #         error = "Invalid username or password. Please try again."
-    #         return error
+        if seller and seller.password == password:
+            print(seller.id)
+            ordered_products1 = get_orders_for_seller(str(seller.id))
+            print("post order")
+            print(ordered_products1)
+            return render_template('seller.html', ordered_products=ordered_products1)
+        else:
+            error = "Invalid username or password. Please try again."
+            return error
     # return render_template('seller.html')
 
     # Function to get orders for a given customer

@@ -38,6 +38,7 @@ class Product(Document):
 
 class Seller(Document):
     seller_name = StringField()
+    password = StringField()
     email = EmailField()
     contact_number = StringField()
     products = ListField(field=ObjectIdField)
