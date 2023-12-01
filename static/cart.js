@@ -7,7 +7,7 @@ document.getElementById('total-items').innerText = cartProducts.length;
 const productData = document.getElementById("cart-products");
 let totalCartPrice = 0;
 for (let i = 0; i < cartProducts.length; i++) {
-    totalCartPrice = totalCartPrice + Number(cartProducts[i].cost);
+    totalCartPrice = totalCartPrice + Number(cartProducts[i].cost*cartProducts[i].ordered_quantity);
     const div = document.createElement('div');
    div.innerHTML = `
     <div class='d-flex flex-row justify-content-between align-items-center pt-lg-4 pt-2 pb-3 border-bottom mobile'>
@@ -22,7 +22,7 @@ for (let i = 0; i < cartProducts.length; i++) {
         <div class='pl-md-0 pl-1'><b>${cartProducts[i].cost}</b></div>
         <div class='pl-md-0 pl-2'>
 <!--            <span class='fa fa-minus-square text-secondary'></span>-->
-            <span class='px-md-3 px-1'>1</span>
+            <span class='px-md-3 px-1'>${cartProducts[i].ordered_quantity}</span>
 <!--            <span class='fa fa-plus-square text-secondary'></span>-->
         </div>
         <div class='pl-md-0 pl-1'><b>${cartProducts[i].cost}</b></div>
@@ -37,8 +37,14 @@ document.getElementById('payment-button').addEventListener('click', function () 
 });
 
 document.getElementById('go-back').addEventListener('click', function () {
-    window.history.go(-1);
-    return false;
+    // window.history.go(-1);
+    let cData = JSON.parse(localStorage.getItem('cData'));
+        let customer_id = '';
+        if (cData && cData !== 'undefined') {
+            customer_id = cData.id;
+            window.location.href = `/get_product_page/${customer_id}`;
+        }
+    // return false;
 });
 
 productData.addEventListener('click', function (event) {

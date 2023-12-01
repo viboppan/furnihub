@@ -4,7 +4,7 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 function getATCButtons() {
     const addToCartButtons = document.querySelectorAll('.add-to-cart');
     let totalCost = 0;
-    document.getElementById('cart-count').innerText = cart.length;
+    document.getElementById('cart-count').innerText = cart.reduce((total,product)=>total+product.ordered_quantity,0);
 
     addToCartButtons.forEach(button => {
         if (!button.hasEventListener) {
@@ -12,17 +12,32 @@ function getATCButtons() {
             button.addEventListener('click', function(e) {
                 var product = button.getAttribute('data-product-id');
                 product = JSON.parse(product.replace(/'/g, '"'));
-                if (product) {
+
+                // Check if the product is already in the cart
+                const existingProductIndex = cart.findIndex(item => item.product_id === product.product_id);
+                if (existingProductIndex !== -1) {
+                    // Product already exists, update the ordered_quantity
+                    if(cart[existingProductIndex].ordered_quantity===product.available_quantity){
+                        alert("No more items available")
+                        return cart
+                    }
+                    cart[existingProductIndex].ordered_quantity += 1;
+
+                } else {
+                    // Product doesn't exist, add it to the cart
+                    product.ordered_quantity = 1;
                     cart.push(product);
-                    totalCost += product.cost;
-                    document.getElementById('cart-count').innerText = cart.length;
                 }
+                totalCost += product.cost;
+                document.getElementById('cart-count').innerText = cart.reduce((total,product)=>total+product.ordered_quantity,0);
             });
         }
     });
+
     console.log(cart);
     return cart;
 }
+
 
 function getViewProductButtons() {
     console.log("Get view Products");
@@ -60,7 +75,6 @@ function openProductModal(product) {
                   <p><b>Dimensions:</b> ${product.dimensions}</p>
                   <p><b>Color:</b> ${product.color}</p>
                   <p><b>Brand:</b> ${product.brand}</p>
-                  <p><b>Type:</b> ${product.type}</p>
                   <p><b>Material:</b> ${product.material}</p>
                   <p><b>Weight:</b> ${product.weight}</p>
                   <p><b>Rating:</b> ${product.rating}</p>

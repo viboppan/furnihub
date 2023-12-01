@@ -75,7 +75,7 @@ def get_product_page(customerid):
         {"name": p.name, "cost": p.cost, "dimensions": p.dimensions, "color": p.color, "brand": p.brand,
          "material": p.material_type, "weight": p.weight, "seller_id": p.seller_id,
          "rating": p.rating, "image_url": p.image_url, "product_id": str(p.id),
-         "available_quantity": p.available_quantity, "category": p.category} for p in products]
+         "available_quantity": p.available_quantity, "category": p.category, "description": p.description} for p in products]
     print("Orders : ")
     print(orders_data)
     return render_template('product_page.html', products=products_data, orders=orders_data, customer=customer_data)
