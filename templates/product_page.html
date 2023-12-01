@@ -21,7 +21,7 @@
             </div>
             <div class="header-right">
                 <div class="greeting" id="user-dropdown">
-                    <span id="username">Hello, {{customer.username}}</span>
+                    <span id="username">Hello, {{customer.first_name}}</span>
                     <div class="dropdown-content" id="user-dropdown-content">
                         <a href="#" id="profile">My Profile</a>
                         <a href="#" id="my-orders">My Orders</a>
@@ -46,8 +46,10 @@
            <div class="profile-info">
             <img src="../static/images/common/profile_default.jpg" alt="Profile Image" class="profile-image">
             <div class="profile-details">
-                <h2>{{ customer.username }}</h2>
-                <p>ID: 123456</p>
+                <h2>{{ customer.first_name }}{{ customer.last_name }}</h2>
+
+                <p>Username: {{ customer.username }}</p>
+                <p>ID: {{ customer.id }}</p>
                 <p>Email: {{customer.email}}</p>
                 <p>Mobile: {{customer.mobile_number}}</p>
                 <p>Address: {{customer.address}}</p>
