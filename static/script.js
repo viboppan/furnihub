@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // Initial loading of products and attaching event listeners
-    const initialFilteredProducts = loadProducts('coffee_table');
+    const initialFilteredProducts = loadProducts('all');
     getATCButtons(); // Attach event listeners
     getViewProductButtons();
 
