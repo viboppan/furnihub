@@ -112,11 +112,58 @@ function loadProducts(category) {
     return filteredProducts; // Return the filtered products
 }
 
+function getCancelButtons() {
+    const cancelButtons = document.querySelectorAll('.cancel-order-button');
+    cancelButtons.forEach(button => {
+        if (!button.hasEventListener) {
+            button.hasEventListener = true; // Mark the button to avoid attaching multiple event listeners
+            button.addEventListener('click', function(e) {
+                var orderID = button.getAttribute('data-product-id');
+                console.log(orderID);
+                const url = 'http://localhost:5000/customer/cancel_order';
+                const order = orders.filter(order=>order.order_id == orderID);
+                const customerID = order[0].customer_id;
+                console.log(order);
+                let orderPayload = {
+                    "order_id": orderID,
+                    "customer_id": customerID
+                };
+                console.log(orderPayload);
+                postData(url, orderPayload)
+                    .then(responseData => {
+                            console.log('Success:', responseData);
+                             orders.map(order => {
+                                if(order.order_id == orderID){
+                                    order.order_status = "cancelled";
+                                    button.parentElement.parentElement.querySelector('.order-status').innerText = order.order_status;
+                                    button.style.visibility = 'hidden';
+                                }
+                            });
+                            console.log(orders);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        }
+    });
+}
+function postData(url = '', data = {}) {
+    // Default options are marked with *
+    return fetch(url, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data), // body data type must match "Content-Type" header
+        })
+        .then(response => response.json());
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     var products = JSON.parse(JSON.stringify(productsData)); // Copy the data to a new array
 
     var orders = JSON.parse(JSON.stringify(ordersData)); // Copy the data to a new array
-    console.log(orders);
     const allProductsLink = document.getElementById('category-home');
     const coffeeTableLink = document.getElementById('coffee-table-link');
     const diningChairLink = document.getElementById('dining_chair-link');
@@ -210,7 +257,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('my-orders').addEventListener('click', function() {
         document.getElementById('ordersModal').style.display = 'block';
-        console.log(orders);
 
         let orderModal = document.getElementById('order-model');
 
@@ -223,7 +269,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="order-status">${order.order_status}</div>
                     </div>
                     <div>
-                        <button class="cancel-order-button" data-product-id="${order.products}" id="cancel-order" style="background-color: red; display: ${order.order_status.toLowerCase() === 'cancelled' ? 'none' : 'inline-block'};" >
+                        <button class="cancel-order-button" 
+                                data-product-id='${order.order_id}' 
+                                id="cancel-order" style="background-color: red; visibility: ${order.order_status.toLowerCase() === 'cancelled' ? 'hidden' : 'visible'};" >
                             Cancel Order
                         </button>
                     </div>
@@ -232,7 +280,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="orders-list">
                    ${order.products.map(currentProduct => {
                         var product = products.find(p => p.product_id === currentProduct.product_id);
-                        console.log(product);
                         if (product) {
                             return `
                                 <div class="product-card">
@@ -255,6 +302,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Append each order's HTML to the container
             orderModal.innerHTML += orderHTML;
         });
+
+        getCancelButtons();
 
     });
 

@@ -111,11 +111,12 @@ def cancel_order(order_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-@order_endpoints.route("/customer/cancel_order/", methods=['POST'])
-def cancel_order_by_customer(order_id):
+@order_endpoints.route("/customer/cancel_order", methods=['POST'])
+def cancel_order_by_customer():
     try:
-        order_id=request.form.get('order_id')
-        customer_id=request.form.get('customer_id')
+        order_data = request.json
+        order_id=order_data.get('order_id')
+        # customer_id=order_data.get('customer_id')
         # Retrieve the order based on the order ID
         order = Order.objects(id=str(order_id)).first()
         if order:
@@ -140,7 +141,8 @@ def cancel_order_by_customer(order_id):
 
             # Convert the order object to a dictionary for JSON serialization
             # order_data = order_dict = order_to_dict(order)
-            return get_product_page(customer_id)
+            # return get_product_page(customer_id)
+            return jsonify({"message": "Order Cancelled successfully"}), 201
         else:
             return jsonify({"error": f"Order with ID {order_id} not found"}), 404
 
