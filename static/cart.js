@@ -33,7 +33,13 @@ for (let i = 0; i < cartProducts.length; i++) {
 document.getElementById('total-cart').innerText = "$" + totalCartPrice + "";
 
 document.getElementById('payment-button').addEventListener('click', function () {
-    window.location.href = `payment_page`;
+    if(cartProducts.length > 0){
+        document.getElementById('payment-button').disabled = false;
+        window.location.href = `payment_page`;
+    } else {
+        document.getElementById('payment-button').disabled = true;
+    }
+
 });
 
 document.getElementById('go-back').addEventListener('click', function () {
