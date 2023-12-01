@@ -6,6 +6,10 @@ body {
     height: 100vh;
     margin: 0;
 }
+.error-message {
+    color: red;
+    padding-top: 10px;
+}
 
 .payment-container {
     width: 500px; /* Adjust the width of the container */

@@ -47,22 +47,38 @@ function proceedPayment(e) {
     e.preventDefault();
     const cardNumber = document.getElementById('card-number').value;
     if (!isValidCardNumber(cardNumber)) {
+        document.getElementById("card-error").innerText = "Please enter a 16-digit credit/debit card number";
         return;
+    }else{
+        document.getElementById("card-error").innerText = "";
+
     }
 
     const cardHolder = document.getElementById('card-holder').value;
     if (!isValidCardHolder(cardHolder)) {
+        document.getElementById("card-name").innerText = "Please enter valid cardholder's name";
         return;
+    } else{
+        document.getElementById("card-name").innerText = "";
+
     }
 
     const expiryDate = document.getElementById('expiry').value;
     if (!isValidExpiryDate(expiryDate)) {
+        document.getElementById("card-expiry").innerText = "Please enter valid expiry date";
         return;
+    } else{
+        document.getElementById("card-expiry").innerText = "";
+
     }
 
     const cvv = document.getElementById('cvv').value;
     if (!isValidCVV(cvv)) {
+        document.getElementById("card-cvv").innerText = "Please enter a 3-digit cvv number";
         return;
+    } else{
+        document.getElementById("card-cvv").innerText = "";
+
     }
     const url = 'http://localhost:5000/add_order';
     postData(url, payload)
@@ -113,8 +129,25 @@ function isValidCardHolder(cardHolder) {
 
 function isValidExpiryDate(expiryDate) {
     const expiryDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
-    return expiryDateRegex.test(expiryDate);
+
+    if (!expiryDateRegex.test(expiryDate)) {
+        return false;
+    }
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear() % 100; // Get last two digits of the current year
+    const currentMonth = currentDate.getMonth() + 1; // getMonth returns 0-11, so add 1
+
+    const [expiryMonth, expiryYear] = expiryDate.split('/').map(Number);
+
+    // Check if the expiry date is in the future
+    if (expiryYear > currentYear || (expiryYear === currentYear && expiryMonth >= currentMonth)) {
+        return true;
+    }
+
+    return false;
 }
+
 
 function isValidCVV(cvv) {
     const cvvRegex = /^\d{3}$/;
