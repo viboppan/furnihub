@@ -118,114 +118,209 @@
             font-size: 36px;
             font-weight: bold;
         }
+
+        .product {
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            background-color: #fff;
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .product h2 {
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+
+        .product p {
+            font-size: 1rem;
+            color: #555;
+        }
     </style>
 </head>
 <body>
 <div class="container-fluid">
     <div class="navbar">
-        <a onclick="toggleForm()"class="text-light">Add Product</a>
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active text-bg-dark" id="pills-add-products-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-add-products"
+                        type="button" role="tab" aria-controls="pills-add-products" aria-selected="true">Add Product
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link text-bg-dark" id="pills-products-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-products"
+                        type="button" role="tab" aria-controls="pills-products" aria-selected="false">My Products
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link text-bg-dark" id="pills-requests-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-requests"
+                        type="button" role="tab" aria-controls="pills-requests" aria-selected="false">Requests
+                </button>
+            </li>
+        </ul>
         <a class="align-end" href="/seller">logout</a>
     </div>
     <div id="popupMessage" class="popup-message"></div>
-    <div class="row">
-        <div class="col-md-6">
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-add-products" role="tabpanel"
+             aria-labelledby="pills-add-products-tab"
+             tabindex="0">
             <div class="row">
                 <div class="col-3"></div>
-            <div class="col-6">
-                <h2>Add Product</h2>
-                <form action="/add_product" method="post" id="productForm" enctype="multipart/form-data">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
+                <div class="col-6">
+                    <h2>Add Product</h2>
+                    <form action="/add_product" method="post" id="productForm" enctype="multipart/form-data">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
 
-                    <label for="cost">Cost:</label>
-                    <input type="number" id="cost" name="cost" step="0.01" required>
+                        <label for="cost">Cost:</label>
+                        <input type="number" id="cost" name="cost" step="0.01" required>
 
-                    <label for="dimensions">Dimensions:</label>
-                    <input type="text" id="dimensions" name="dimensions" placeholder="e.g., 10.0, 5.0, 2.5" required>
+                        <label for="dimensions">Dimensions:</label>
+                        <input type="text" id="dimensions" name="dimensions" placeholder="e.g., 10.0, 5.0, 2.5"
+                               required>
 
-                    <label for="color">Color:</label>
-                    <input type="text" id="color" name="color" required>
+                        <label for="color">Color:</label>
+                        <input type="text" id="color" name="color" required>
 
-                    <label for="brand">Brand:</label>
-                    <input type="text" id="brand" name="brand" required>
+                        <label for="brand">Brand:</label>
+                        <input type="text" id="brand" name="brand" required>
 
-                    <label for="material_type">Material Type:</label>
-                    <input type="text" id="material_type" name="material_type" required>
+                        <label for="material_type">Material Type:</label>
+                        <input type="text" id="material_type" name="material_type" required>
 
-                    <label for="weight">Weight:</label>
-                    <input type="number" id="weight" name="weight" step="0.01" required>
+                        <label for="weight">Weight:</label>
+                        <input type="number" id="weight" name="weight" step="0.01" required>
 
-                    <label for="seller_id" style="display: none;">Seller ID:</label>
-                    <input type="text" id="seller_id" name="seller_id" value="656405034ea6f6951b8deb59" readonly style="display: none;">
+                        <label for="seller_id" style="display: none;">Seller ID:</label>
+                        <input type="text" id="seller_id" name="seller_id" value="{{ seller_id }}" readonly
+                               style="display: none;">
 
-                    <label for="rating">Rating:</label>
-                    <input type="number" id="rating" name="rating" step="0.1" min="1" max="5">
+                        <label for="rating">Rating:</label>
+                        <input type="number" id="rating" name="rating" step="0.1" min="1" max="5">
 
-                    <label for="image">Select Image: </label>
-                    <input type="file" id="image" name="image" accept="image/*" required>
+                        <label for="image">Select Image: </label>
+                        <input type="file" id="image" name="image" accept="image/*" required>
 
-                    <label for="category">Category:</label>
-                    <select id="category" name="category">
-                        <option value="coffee_table">Coffee Table</option>
-                        <option value="dining_chair">Dining Chair</option>
-                        <option value="dining_set">Dining Set</option>
-                        <option value="office_chair">Office Chair</option>
-                        <option value="recliner">Recliner</option>
-                        <option value="shoe_cabinet">Shoe Cabinet</option>
-                        <option value="sofa">Sofa</option>
-                    </select>
+                        <label for="category">Category:</label>
+                        <select id="category" name="category">
+                            <option value="coffee_table">Coffee Table</option>
+                            <option value="dining_chair">Dining Chair</option>
+                            <option value="dining_set">Dining Set</option>
+                            <option value="office_chair">Office Chair</option>
+                            <option value="recliner">Recliner</option>
+                            <option value="shoe_cabinet">Shoe Cabinet</option>
+                            <option value="sofa">Sofa</option>
+                        </select>
 
-                    <label for="description">Description:</label>
-                    <textarea id="description" name="description"></textarea>
+                        <label for="description">Description:</label>
+                        <textarea id="description" name="description"></textarea>
 
-                    <label for="available_quantity">Available Quantity:</label>
-                    <input type="number" id="available_quantity" name="available_quantity" required>
+                        <label for="available_quantity">Available Quantity:</label>
+                        <input type="number" id="available_quantity" name="available_quantity" required>
 
-                    <button type="submit" id="add-product" value="ADD PRODUCT">Add Product</button>
-                </form>
-            </div>
+                        <button type="submit" id="add-product" value="ADD PRODUCT">Add Product</button>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="product-details" id="productDetails">
-                <h1>Order requests</h1>
-                {% for order in ordered_products %}
-                    {% for product in order.products %}
-                        <hr>
-                        <div class="card">
-                            <div class="card-body container-fluid">
-                                <div class="row">
-                                    <p>
-                                    <div class="col-3">
-                                        <img class="order-image" width="150" height="150"
-                                             src="{{ product.product.image_url }}" alt="{{ product.product.name }}">
-                                    </div>
-                                    <div class="col-6">
-                                        <p>Name : {{ product.product.name }}</p>
-                                        <p>Order ID : {{ order.order_id }}</p>
-                                        <p>Product ID : {{ product.product.id }}</p>
-                                        <p>Quantity : {{ product.quantity }}</p>
-                                    </div>
-                                    <div class="col-3 d-grid text-center">
-                                        <div class="row">
-                                            <form action="/dispatch_order/{{ order.order_id }}" method="POST">
-                                                <input type="text" class="d-none" name="seller_id"
-                                                       value="{{ product.product.seller_id }}">
-                                                <button class="btn btn-success btn-lg" type="submit">Dispatch</button>
-                                            </form>
-                                        </div>
-                                        <div class="row">
-                                            <form action="/cancel_order/{{ order.order_id }}">
-                                                <button class="btn btn-danger btn-lg" type="submit">Cancel</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
+        <div class="tab-pane fade" id="pills-products" role="tabpanel" aria-labelledby="pills-products-tab"
+             tabindex="0">
+            <div class="row">
+                {% for product in products_data %}
+                    <div class="col-2 product">
+                        <img src="{{ product['image_url'] }}" alt="{{ product['name'] }}" class="product-image">
+                        <p>Name: {{ product['name'] }}</p>
+                        <p>{{ product['color'] }}</p>
+                        <p>Price: {{ product['cost'] }}</p>
+                        <p>ID: {{ product['product_id'] }}</p>
+                    </div>
                 {% endfor %}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-requests" role="tabpanel" aria-labelledby="pills-requests-tab"
+             tabindex="0">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="product-details" id="productDetails">
+                        <h1>Order requests</h1>
+                        {% for order in ordered_products %}
+                            {% for product in order.products %}
+                                <hr>
+                                <div class="card">
+                                    <div class="card-body container-fluid">
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-3">
+                                                <img class="order-image" width="150" height="150"
+                                                     src="{{ product.product.image_url }}"
+                                                     alt="{{ product.product.name }}">
+                                            </div>
+                                            <div class="col-6">
+                                                <p>Name : {{ product.product.name }}</p>
+                                                <p>Order ID : {{ order.order_id }}</p>
+                                                <p>Product ID : {{ product.product.id }}</p>
+                                                <p>Quantity : {{ product.quantity }}</p>
+                                            </div>
+                                            <div class="col-3 d-grid text-center">
+                                                <div class="row">
+                                                    {% if order.order_status == "processing" %}
+                                                        <!-- If the order status is processing, show Confirm button -->
+                                                        <form action="/confirm_order/{{ order.order_id }}"
+                                                              method="POST">
+                                                            <input type="text" class="d-none" name="seller_id"
+                                                                   value="{{ product.product.seller_id }}">
+                                                            <button class="btn btn-success btn-lg" type="submit">Confirm
+                                                            </button>
+                                                        </form>
+                                                    {% elif order.order_status == "confirmed" %}
+                                                        <!-- If the order status is confirmed, show Pick up or Delivered button based on delivery type -->
+                                                        {% if order.delivery_type == "pick_up" %}
+                                                            <form action="/pick_up_order/{{ order.order_id }}"
+                                                                  method="POST">
+                                                                <input type="text" class="d-none" name="seller_id"
+                                                                       value="{{ product.product.seller_id }}">
+                                                                <button class="btn btn-info btn-lg" type="submit">Pick
+                                                                    up
+                                                                </button>
+                                                            </form>
+                                                        {% elif order.delivery_type == "delivery" %}
+                                                            <form action="/deliver_order/{{ order.order_id }}"
+                                                                  method="POST">
+                                                                <input type="text" class="d-none" name="seller_id"
+                                                                       value="{{ product.product.seller_id }}">
+                                                                <button class="btn btn-primary btn-lg" type="submit">
+                                                                    Delivered
+                                                                </button>
+                                                            </form>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </div>
+                                                <div class="row">
+                                                    <form action="/cancel_order/{{ order.order_id }}">
+                                                        <button class="btn btn-danger btn-lg" type="submit">Cancel
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

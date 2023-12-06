@@ -60,6 +60,7 @@ class Order(Document):
     order_date = DateTimeField(default=datetime.datetime.now)
     total_cost = FloatField()
     order_status = StringField(default='processing')
+    delivery_type = StringField()
 
 
 class Payment(Document):

@@ -3,7 +3,8 @@ let cData = JSON.parse(localStorage.getItem('cData'));
 let payload = {
     "customer_id": "",
     "products": [],
-    "total_cost": 0
+    "total_cost": 0,
+    "delivery_type": "delivery"
 };
 let cardPayload = {
     "payment_date": "",
@@ -80,6 +81,10 @@ function proceedPayment(e) {
         document.getElementById("card-cvv").innerText = "";
 
     }
+
+    const deliveryType = document.getElementById("delivery-type").value;
+    payload.delivery_type = deliveryType;
+    console.log(payload)
     const url = 'http://localhost:5000/add_order';
     postData(url, payload)
         .then(responseData => {

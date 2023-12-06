@@ -43,6 +43,7 @@ def add_order():
             customer_id=order_data.get('customer_id'),
             products=product_bought_instances,
             total_cost=total_cost,
+            delivery_type=order_data.get('delivery_type')
         )
         order.save()
         generated_id = str(order.id)
@@ -149,7 +150,7 @@ def cancel_order_by_customer():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-@order_endpoints.route("/dispatch_order/<order_id>", methods=['GET','POST'])
+@order_endpoints.route("/confirm_order/<order_id>", methods=['GET','POST'])
 def dispatch_order(order_id):
     try:
         # Retrieve the order based on the order ID
@@ -158,7 +159,49 @@ def dispatch_order(order_id):
         if order:
             if order.order_status == "cancelled":
                 return jsonify({"error": f"Order with ID {order_id} already cancelled"}), 400
-            order.order_status = "dispatched"
+            order.order_status = "confirmed"
+            order.save()
+
+            # Convert the order object to a dictionary for JSON serialization
+            order_data = order_dict = order_to_dict(order)
+            return render_template('seller.html', ordered_products=get_orders_for_seller(seller_id))
+        else:
+            return jsonify({"error": f"Order with ID {order_id} not found"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@order_endpoints.route("/pick_up_order/<order_id>", methods=['GET','POST'])
+def pickup_order(order_id):
+    try:
+        # Retrieve the order based on the order ID
+        order = Order.objects(id=str(order_id)).first()
+        seller_id = request.form.get('seller_id')
+        if order:
+            if order.order_status == "cancelled":
+                return jsonify({"error": f"Order with ID {order_id} already cancelled"}), 400
+            order.order_status = "Picked up"
+            order.save()
+
+            # Convert the order object to a dictionary for JSON serialization
+            order_data = order_dict = order_to_dict(order)
+            return redirect('/seller_home/' + str(seller_id))
+        else:
+            return jsonify({"error": f"Order with ID {order_id} not found"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@order_endpoints.route("/deliver_order/<order_id>", methods=['GET','POST'])
+def delivered_order(order_id):
+    try:
+        # Retrieve the order based on the order ID
+        order = Order.objects(id=str(order_id)).first()
+        seller_id = request.form.get('seller_id')
+        if order:
+            if order.order_status == "cancelled":
+                return jsonify({"error": f"Order with ID {order_id} already cancelled"}), 400
+            order.order_status = "Delivered"
             order.save()
 
             # Convert the order object to a dictionary for JSON serialization
@@ -181,7 +224,10 @@ def get_orders_for_seller(seller_id):
         product_ids = [str(product.id) for product in seller_products]
         print((product_ids))
         # Retrieve orders containing the seller's products
-        orders = Order.objects(products__product_id__in=product_ids, order_status="processing")
+        orders = Order.objects(
+            Q(products__product_id__in=product_ids) &
+            (Q(order_status="processing") | Q(order_status="confirmed"))
+        )
         print(orders)
         # Convert orders to a list of dictionaries for JSON serialization
         orders_data = [orderedprods_to_dict(order, seller_products) for order in orders]
@@ -207,7 +253,9 @@ def order_to_dict(order):
         'products': products_list,
         'order_date': order.order_date.strftime('%Y-%m-%d %H:%M:%S'),
         'total_cost': order.total_cost,
-        'order_status': order.order_status
+        'order_status': order.order_status,
+        'delivery_type': order.delivery_type
+
     }
     return order_dict
 
@@ -245,6 +293,7 @@ def orderedprods_to_dict(order, product_objects):
         'products': products_list,
         'order_date': order.order_date.strftime('%Y-%m-%d %H:%M:%S'),
         'total_cost': order.total_cost,
-        'order_status': order.order_status
+        'order_status': order.order_status,
+        'delivery_type': order.delivery_type
     }
     return order_dict

@@ -19,13 +19,13 @@
                    placeholder="xxxx xxxx xxxx xxxx"
                    required
             >
-            <div id = "card-error" class = "error-message"></div>
+            <div id="card-error" class="error-message"></div>
 
         </div>
         <div class="form-group">
             <label for="card-holder">Card Holder</label>
             <input type="text" id="card-holder" name="card-holder" placeholder="Enter the card holder's name" required>
-            <div id = "card-name" class = "error-message"></div>
+            <div id="card-name" class="error-message"></div>
         </div>
         <div class="form-group">
             <label for="expiry">Expiry Date</label>
@@ -34,7 +34,7 @@
                    name="expiry"
                    placeholder="MM/YY"
             >
-            <div id = "card-expiry" class = "error-message"></div>
+            <div id="card-expiry" class="error-message"></div>
         </div>
         <div class="form-group">
             <label for="cvv">CVV</label>
@@ -44,7 +44,23 @@
                    placeholder="xxx"
                    required
             >
-            <div id = "card-cvv" class = "error-message"></div>
+            <div id="card-cvv" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text"
+                   id="address"
+                   name="address"
+                   placeholder="Enter your address"
+            >
+        </div>
+        <div class="form-group">
+            <label for="delivery-type">Delivery Type</label>
+            <select id="delivery-type" name="delivery-type" required>
+                <option value="pick_up">Pick Up</option>
+                <option value="delivery">Delivery</option>
+            </select>
+            <div id="delivery-type-error" class="error-message"></div>
         </div>
         <button id="payment-button" class="pay-button" onclick="proceedPayment()">Pay Now</button>
     </form>
